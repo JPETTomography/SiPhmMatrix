@@ -8,7 +8,6 @@
 #include <LongScintillator/scintillator_templates.h>
 #include <LongScintillator/math_h/randomfunc.h>
 #include <LongScintillator/math_h/interpolate.h>
-#include <FitTimeParam/obtain_distr_params.h>
 int main(int , char **arg){
 	Printf(arg[0]);
 	Printf(QDateTime::currentDateTime().toString().toStdString().c_str());
@@ -23,12 +22,7 @@ int main(int , char **arg){
 		sig_time_diff[k]=new double[n];
 	}
 	double X_lighting[3];X_lighting[0]=scin_z;
-	LongScintillator *scintillator=CreateScintillator();	{
-		ScintillatorDebug debug(scintillator);
-		double rize, fwhm;
-		ObtainDistrParams([&debug](double x){return debug.LightingTimeDistr(x);},rize,fwhm);
-		Printf("Emission time distr.: rise=%f[ns];FWHM=%f[ns];\n",rize,fwhm);
-	}
+	LongScintillator *scintillator=CreateScintillator();
 	LongScintillator *scintillator2=CreateScintillator();
 	AbstractPhotoMultiplier *photomult=CreatePhotoMultiplier(scintillator);
 	AbstractPhotoMultiplier *photomult2=CreatePhotoMultiplier(scintillator2);
