@@ -18,6 +18,7 @@ Build requires libqt4 and libqt4-dev packages installed on your system.
 Also it requires root installed.
 The configuration and build can be done automatically.
 Run script "autoconf.sh" for creating all needed files.
-Edit this file qt_build.pri if needed (View it to see if it's needed!!!!)
+Edit file qt_build.pri if needed (View it to see if it's needed!!!!)
+I prefered to set events_number to 100000.
 Then you may run "buildme.sh" for building. If you give it some path as 
 a parameter, it will copy all binaries there.
