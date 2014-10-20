@@ -1,26 +1,11 @@
 #/bin/bash
 echo "COMPILING..."
-cd LongScintillator
-./buildme.sh
+(cd LongScintillator;./buildme.sh)
 if (( $? )); then exit 1; fi
-cd ..
-cd Model_routines
-qmake model_routines.pro
+(cd Model_routines;qmake model_routines.pro;make clean;make)
 if (( $? )); then exit 1; fi
-make clean
-make
-if (( $? )); then exit 1; fi
-cd ..
-cd ModelScin
-qmake ModelScin.pro
-make clean
-make
-cd ..
-cd ModelScin_coord
-qmake ModelScin_coord.pro
-make clean
-make
-cd ..
+(cd ModelScin;qmake ModelScin.pro;make clean;make)
+(cd ModelScin_coord;qmake ModelScin_coord.pro;make clean;make)
 if [ $# -ne 1 ]; then
     echo "Binaries are not copied"
     exit

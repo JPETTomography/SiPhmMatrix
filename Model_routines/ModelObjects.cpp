@@ -18,14 +18,14 @@ FuncFromFile absor(absorbtioncurve,0,2);bool done_abs=false;
 FuncFromFile eff(efficiencycurve,0,6);bool done_eff=false;//R4998
 FuncFromFile eff2(efficiencycurve2);bool done_eff2=false;
 LongScintillator* CreateScintillator(double length){
-	if(!done_abs){absor.MultiplyBy(0.18);done_abs=true;}
+	if(!done_abs){absor.MultiplyBy(0.1);done_abs=true;}
 #define params double,double,double,ScinLightingParamsTypes
 	return new ScintillatorWithAbsorption<Scintillator3D_rect,FuncFromFile,3,FuncFromFile,params>
 			(absor,wl,wl.Min(),wl.Max(),0.01,length,scin_hwx,scin_hwy,scin_params);
 #undef params
 }
 LongScintillator* CreateScintillator4Si(double length){
-	if(!done_abs){absor.MultiplyBy(0.18);done_abs=true;}
+	if(!done_abs){absor.MultiplyBy(0.1);done_abs=true;}
 #define params double,double,double,ScinLightingParamsTypes
 	return new ScintillatorWithAbsorption<Scintillator3D_rect,FuncFromFile,3,FuncFromFile,params>
 			(absor,wl,wl.Min(),wl.Max(),0.01,length,scin_hwx_si,scin_hwy_si,scin_params);
