@@ -9,23 +9,23 @@
 #include "funcfromfile.h"
 #include "displaygraph.h"
 #include "display_root_object.h"
-const QString emissioncurve="ModelData/BC-420emission.txt";
-const QString efficiencycurve="ModelData/tubes_efficiency.txt";
-const QString efficiencycurve2="ModelData/Si APD SW.txt";
-const QString absorbtioncurve="ModelData/absorption.txt";
+const QString emissioncurve="ModelData/BC-420_emission.txt";
+const QString efficiencycurve="ModelData/tube_QE.txt";
+const QString efficiencycurve2="ModelData/Si_PhM_QE.txt";
+const QString absorbtioncurve="ModelData/absorption_coef_cm-1.txt";
 FuncFromFile wl(emissioncurve);
 FuncFromFile absor(absorbtioncurve,0,2);bool done_abs=false;
-FuncFromFile eff(efficiencycurve,0,6);bool done_eff=false;//R4998
+FuncFromFile eff(efficiencycurve);bool done_eff=true;//is in needed units already
 FuncFromFile eff2(efficiencycurve2);bool done_eff2=false;
 LongScintillator* CreateScintillator(double length){
-	if(!done_abs){absor.MultiplyBy(0.1);done_abs=true;}
+	if(!done_abs){absor.MultiplyBy(0.18);done_abs=true;}//SCALING!!!
 #define params double,double,double,ScinLightingParamsTypes
 	return new ScintillatorWithAbsorption<Scintillator3D_rect,FuncFromFile,3,FuncFromFile,params>
 			(absor,wl,wl.Min(),wl.Max(),0.01,length,scin_hwx,scin_hwy,scin_params);
 #undef params
 }
 LongScintillator* CreateScintillator4Si(double length){
-	if(!done_abs){absor.MultiplyBy(0.1);done_abs=true;}
+	if(!done_abs){absor.MultiplyBy(0.18);done_abs=true;}//SCALING!!!
 #define params double,double,double,ScinLightingParamsTypes
 	return new ScintillatorWithAbsorption<Scintillator3D_rect,FuncFromFile,3,FuncFromFile,params>
 			(absor,wl,wl.Min(),wl.Max(),0.01,length,scin_hwx_si,scin_hwy_si,scin_params);
