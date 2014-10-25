@@ -13,7 +13,7 @@ int main(int , char **arg){
 	double dn_reg[n];
 	double Length[n];
 	double X_lighting[3];
-	LongScintillator *scintillator=CreateScintillator();
+	LongScintillator *scintillator=CreateScintillatorEJ230();
 	AbstractPhotoMultiplier *photomult=CreatePhotoMultiplier(scintillator);
 	for(int i=0; i<n;i++){
 		X_lighting[0]=10.0*i;

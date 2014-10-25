@@ -22,8 +22,8 @@ int main(int , char **arg){
 		sig_time_diff[k]=new double[n];
 	}
 	double X_lighting[3];X_lighting[0]=scin_z;
-	LongScintillator *scintillator=CreateScintillator();
-	LongScintillator *scintillator2=CreateScintillator();
+	LongScintillator *scintillator=CreateScintillatorBC420();
+	LongScintillator *scintillator2=CreateScintillatorBC420();
 	AbstractPhotoMultiplier *photomult=CreatePhotoMultiplier(scintillator);
 	AbstractPhotoMultiplier *photomult2=CreatePhotoMultiplier(scintillator2);
 	for(int index=0; index<n;index++ ){

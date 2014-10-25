@@ -13,23 +13,15 @@ const int step=STEP;
 const uint n_widm=WIDMO;
 const uint K=3;
 const uint this_K=100;
-LongScintillator* CreateScintillator(double length=scin_length);
-LongScintillator* CreateScintillator4Si(double length=scin_length);
+LongScintillator* CreateScintillatorEJ230(double length=scin_length);
+LongScintillator* CreateScintillatorBC420(double length=scin_length);
+LongScintillator* CreateScintillatorBC4204Si(double length=scin_length);
 LongScintillator* CreateIdealScintillator(double length);
 AbstractPhotoMultiplier* CreatePhotoMultiplier(IPhoton* source);
 AbstractPhotoMultiplier* CreateSiliconPhotoMultiplier(IPhoton* source);
 // SCINTILLATOR SIZE
 #define scin_size_2d scin_length,scin_hwx
 #define scin_size scin_length,scin_hwx,scin_hwy
-// FOR PLOTS
-const double ymin = 0;
-const double ymax = 105;
-const double xmin = 350;
-const double xmax = 500;
-extern FuncFromFile wl;
-void DisplayPlots();
-void DisplayWavelengthHist(TH1F* hist);
-void DisplayTimeHists(std::string name,TMultiGraph* hists, double maxval);
 //SILICON
 #define templateparams uint, double, double, uint, double
 typedef PhotonParamGroup<FirstPhotonsReg,uint> MultRowF;
