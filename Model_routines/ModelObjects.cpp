@@ -10,32 +10,34 @@
 #include "displaygraph.h"
 #include "display_root_object.h"
 const QString emissioncurve="ModelData/BC-420_emission.txt";
+const QString emissioncurve2="ModelData/E-J230_emission.txt";
 const QString efficiencycurve="ModelData/tube_QE.txt";
 const QString efficiencycurve2="ModelData/Si_PhM_QE.txt";
 const QString absorbtioncurve="ModelData/absorption_coef_cm-1.txt";
 const QString absorbtioncurve2="ModelData/EJ230_absorption_length.txt";
-FuncFromFile wl(emissioncurve);
+FuncFromFile wl(emissioncurve);FuncFromFile wl2(emissioncurve2);
 FuncFromFile absor(absorbtioncurve,0,2);bool done_abs=false;
+FuncFromFile attenuation(absorbtioncurve2);bool done_abs2=false;
 FuncFromFile eff(efficiencycurve);bool done_eff=true;//is in needed units already
 FuncFromFile eff2(efficiencycurve2);bool done_eff2=false;
 LongScintillator* CreateScintillatorEJ230(double length){
-	if(!done_abs){absor.MultiplyBy(0.18);done_abs=true;}//SCALING!!!
 #define params double,double,double,ScinLightingParamsTypes
-	return new ScintillatorWithAbsorption<Scintillator3D_rect,FuncFromFile,3,FuncFromFile,params>
-			(absor,wl,wl.Min(),wl.Max(),0.01,length,scin_hwx,scin_hwy,scin_params);
+	if(!done_abs2){attenuation.MultiplyBy(10);done_abs2=true;}//SCALING!!!
+	return new ScintillatorWithAttenuationLength<Scintillator3D_rect,FuncFromFile,3,FuncFromFile,params>
+			(attenuation,wl2,wl2.Min(),wl2.Max(),0.01,length,scin_hwx,scin_hwy,scin_params);
 #undef params
 }
 LongScintillator* CreateScintillatorBC420(double length){
 	if(!done_abs){absor.MultiplyBy(0.18);done_abs=true;}//SCALING!!!
 #define params double,double,double,ScinLightingParamsTypes
-	return new ScintillatorWithAbsorption<Scintillator3D_rect,FuncFromFile,3,FuncFromFile,params>
+	return new ScintillatorWithAbsorptionCoef<Scintillator3D_rect,FuncFromFile,3,FuncFromFile,params>
 			(absor,wl,wl.Min(),wl.Max(),0.01,length,scin_hwx,scin_hwy,scin_params);
 #undef params
 }
 LongScintillator* CreateScintillatorBC4204Si(double length){
 	if(!done_abs){absor.MultiplyBy(0.18);done_abs=true;}//SCALING!!!
 #define params double,double,double,ScinLightingParamsTypes
-	return new ScintillatorWithAbsorption<Scintillator3D_rect,FuncFromFile,3,FuncFromFile,params>
+	return new ScintillatorWithAbsorptionCoef<Scintillator3D_rect,FuncFromFile,3,FuncFromFile,params>
 			(absor,wl,wl.Min(),wl.Max(),0.01,length,scin_hwx_si,scin_hwy_si,scin_params);
 #undef params
 }

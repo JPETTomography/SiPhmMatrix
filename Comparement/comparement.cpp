@@ -9,13 +9,13 @@
 #include <LongScintillator/math_h/sigma.h>
 int main(int , char **arg){
 	int n=int(scin_length/10);
-	double n_reg[n];
-	double dn_reg[n];
-	double Length[n];
+	double n_reg[n+1];
+	double dn_reg[n+1];
+	double Length[n+1];
 	double X_lighting[3];
 	LongScintillator *scintillator=CreateScintillatorEJ230();
 	AbstractPhotoMultiplier *photomult=CreatePhotoMultiplier(scintillator);
-	for(int i=0; i<n;i++){
+	for(int i=0; i<=n;i++){
 		X_lighting[0]=10.0*i;
 		Printf("Position %f",X_lighting[0]);
 		Sigma<double> count;
@@ -37,7 +37,7 @@ int main(int , char **arg){
 	file.open(QIODevice::WriteOnly);
 	if(file.isOpen()){
 		QTextStream str(&file);
-		for(int i=0; i<n; i++){
+		for(int i=0; i<=n; i++){
 			str<<Length[i]<<" "<<n_reg[i]<<" "<<dn_reg[i]<<"\n";
 		}
 		file.close();
