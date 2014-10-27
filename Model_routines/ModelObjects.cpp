@@ -35,15 +35,12 @@ LongScintillator* CreateScintillatorBC420(double length){
 			(absor,wl,wl.Min(),wl.Max(),0.01,length,scin_hwx,scin_hwy,scin_params);
 #undef params
 }
-LongScintillator* CreateScintillatorBC4204Si(double length){
+LongScintillator* CreateScintillatorBC420_4Si_matrix(double length){
 	if(!done_abs){absor.MultiplyBy(0.18);done_abs=true;}//SCALING!!!
 #define params double,double,double,ScinLightingParamsTypes
 	return new ScintillatorWithAbsorptionCoef<Scintillator3D_rect,FuncFromFile,3,FuncFromFile,params>
 			(absor,wl,wl.Min(),wl.Max(),0.01,length,scin_hwx_si,scin_hwy_si,scin_params);
 #undef params
-}
-LongScintillator* CreateIdealScintillator(double length){
-	return new Scintillator3D_rect(length,scin_hwx,scin_hwy,scin_params);
 }
 class PhotoMultiplier:public virtual PhotoMultiplier_Efficiency1par<3,FuncFromFile>
 		,public virtual PhotoMultiplierConstTimeRes{
@@ -75,7 +72,7 @@ double ValueCnt(MultRowColC* master, int i2){
 	else return (*master)[x][y].RightCount();
 }
 
-AbstractPhotoMultiplier* CreatePhotoMultiplier(IPhoton *source){
+AbstractPhotoMultiplier* CreateTubePhotoMultiplier(IPhoton *source){
 	if(!done_eff){eff.MultiplyBy(0.01);done_eff=true;}
 	return new PhotoMultiplier(source,eff,phm_res_R);
 }

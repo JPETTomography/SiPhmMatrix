@@ -15,9 +15,8 @@ const uint K=3;
 const uint this_K=100;
 LongScintillator* CreateScintillatorEJ230(double length=scin_length);
 LongScintillator* CreateScintillatorBC420(double length=scin_length);
-LongScintillator* CreateScintillatorBC4204Si(double length=scin_length);
-LongScintillator* CreateIdealScintillator(double length);
-AbstractPhotoMultiplier* CreatePhotoMultiplier(IPhoton* source);
+LongScintillator* CreateScintillatorBC420_4Si_matrix(double length=scin_length);
+AbstractPhotoMultiplier* CreateTubePhotoMultiplier(IPhoton* source);
 AbstractPhotoMultiplier* CreateSiliconPhotoMultiplier(IPhoton* source);
 // SCINTILLATOR SIZE
 #define scin_size_2d scin_length,scin_hwx

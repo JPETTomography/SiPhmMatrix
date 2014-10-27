@@ -24,8 +24,8 @@ int main(int , char **arg){
 	double X_lighting[3];X_lighting[0]=scin_z;
 	LongScintillator *scintillator=CreateScintillatorBC420();
 	LongScintillator *scintillator2=CreateScintillatorBC420();
-	AbstractPhotoMultiplier *photomult=CreatePhotoMultiplier(scintillator);
-	AbstractPhotoMultiplier *photomult2=CreatePhotoMultiplier(scintillator2);
+	AbstractPhotoMultiplier *photomult=CreateTubePhotoMultiplier(scintillator);
+	AbstractPhotoMultiplier *photomult2=CreateTubePhotoMultiplier(scintillator2);
 	for(int index=0; index<n;index++ ){
 		uint N_photons=(index*step)+scin_begin;
 		Printf(QDateTime::currentDateTime().toString().toStdString().c_str());

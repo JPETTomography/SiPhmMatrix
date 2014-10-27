@@ -14,7 +14,7 @@ int main(int , char **arg){
 	double Length[n+1];
 	double X_lighting[3];
 	LongScintillator *scintillator=CreateScintillatorEJ230();
-	AbstractPhotoMultiplier *photomult=CreatePhotoMultiplier(scintillator);
+	AbstractPhotoMultiplier *photomult=CreateTubePhotoMultiplier(scintillator);
 	for(int i=0; i<=n;i++){
 		X_lighting[0]=10.0*i;
 		Printf("Position %f",X_lighting[0]);

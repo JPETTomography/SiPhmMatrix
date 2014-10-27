@@ -16,9 +16,9 @@ int main(int , char **arg){
 	double n_ph_big[n];
 	double* sig_time_diff[K+1];
 		for(uint k=0; k<=K; k++)sig_time_diff[k]=new double[n];
-	LongScintillator *scintillator=CreateScintillatorBC4204Si();
+	LongScintillator *scintillator=CreateScintillatorBC420_4Si_matrix();
 	AbstractPhotoMultiplier *photomult=CreateSiliconPhotoMultiplier(scintillator);
-	LongScintillator *scintillator2=CreateScintillatorBC4204Si();
+	LongScintillator *scintillator2=CreateScintillatorBC420_4Si_matrix();
 	AbstractPhotoMultiplier *photomult2=CreateSiliconPhotoMultiplier(scintillator2);
 	for(int index=0; index<n;index++ ){
 		uint N_photons=(index*step)+scin_begin_si;
