@@ -30,7 +30,7 @@ int main(int , char **arg){
 		uint N_photons=(index*step)+scin_begin;
 		Printf(QDateTime::currentDateTime().toString().toStdString().c_str());
 		Printf("Monte Carlo for N = %i (%i virtual experiments)...",N_photons, events_number);
-		PhotonCounter counter(photomult,true);
+		PhotonCounter counter(photomult);
 		FirstPhotonTimeRes first_photons(photomult,this_K);
 		for(uint cnt=0;cnt<events_number; cnt++){
 			if(0==((cnt+1)%1000))Printf("\texperiment number %i...",cnt+1);
@@ -39,8 +39,8 @@ int main(int , char **arg){
 			scintillator->RegisterLighting(X_lighting,N_photons);
 		}
 		n_ph[index]=N_photons;
-		n_ph_l[index]=double(counter.LeftCount())/events_number;
-		n_ph_r[index]=double(counter.RightCount())/events_number;
+		n_ph_l[index]=counter.LeftAverage();
+		n_ph_r[index]=counter.RightAverage();
 		n_ph_both[index]=n_ph_l[index]+n_ph_r[index];
 		for(uint k=0; k<K; k++){
 			sig_time_left[k][index]=first_photons.SigmaLeftPhotonTime(k);
