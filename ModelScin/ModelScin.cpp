@@ -82,7 +82,7 @@ int main(int , char **arg){
 		for(int i=0; i<n; i++){
 			str<<n_ph[i]<<" "<<n_ph_l[i]<<" "<<n_ph_r[i]<<" "<<n_ph_both[i];
 			for(uint k=0;k<=K;k++)
-				str<<" "<<sig_time_diff[K][i];
+				str<<" "<<sig_time_diff[k][i];
 			str<<"\n";
 		}
 		file.close();
