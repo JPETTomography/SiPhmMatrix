@@ -6,7 +6,6 @@ if (( $? )); then exit 1; fi
 if (( $? )); then exit 1; fi
 (cd ModelScin;qmake ModelScin.pro;make clean; make)
 (cd ModelScin_coord;qmake ModelScin_coord.pro;make clean; make)
-(cd Comparement;qmake Comparement.pro;make clean; make)
 if [ $# -ne 1 ]; then
     echo "Binaries are not copied"
     exit
