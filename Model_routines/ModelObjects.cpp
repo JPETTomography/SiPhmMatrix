@@ -24,22 +24,22 @@ FuncFromFile eff2(efficiencycurve2);bool done_eff2=false;
 LongScintillator* CreateScintillatorEJ230(double length){
 #define params double,double,double,ScinLightingParamsTypes
 	if(!done_abs2){attenuation.MultiplyBy(10);done_abs2=true;}//SCALING!!!
-	return new ScintillatorWithAbsorptionCoef<Scintillator3D_rect,decltype(absor2)*,3,FuncFromFile,params>
-			(&absor2,wl2,wl2.Min(),wl2.Max(),0.01,length,scin_hwx,scin_hwy,scin_params);
+	return new AbsorptionCoef<Scintillator3D_rect,decltype(absor2)*,3,params>
+			(&absor2,[](double w){return wl2(w);},wl2.Min(),wl2.Max(),0.01,length,scin_hwx,scin_hwy,scin_params);
 #undef params
 }
 LongScintillator* CreateScintillatorBC420(double length){
 	if(!done_abs){absor.MultiplyBy(0.18);done_abs=true;}//SCALING!!!
 #define params double,double,double,ScinLightingParamsTypes
-	return new ScintillatorWithAbsorptionCoef<Scintillator3D_rect,decltype(absor),3,FuncFromFile,params>
-			(absor,wl,wl.Min(),wl.Max(),0.01,length,scin_hwx,scin_hwy,scin_params);
+	return new AbsorptionCoef<Scintillator3D_rect,decltype(absor),3,params>
+			(absor,[](double w){return wl(w);},wl.Min(),wl.Max(),0.01,length,scin_hwx,scin_hwy,scin_params);
 #undef params
 }
 LongScintillator* CreateScintillatorBC420_4Si_matrix(double length){
 	if(!done_abs){absor.MultiplyBy(0.18);done_abs=true;}//SCALING!!!
 #define params double,double,double,ScinLightingParamsTypes
-	return new ScintillatorWithAbsorptionCoef<Scintillator3D_rect,FuncFromFile,3,FuncFromFile,params>
-			(absor,wl,wl.Min(),wl.Max(),0.01,length,scin_hwx_si,scin_hwy_si,scin_params);
+	return new AbsorptionCoef<Scintillator3D_rect,FuncFromFile,3,params>
+			(absor,[](double w){return wl(w);},wl.Min(),wl.Max(),0.01,length,scin_hwx_si,scin_hwy_si,scin_params);
 #undef params
 }
 class PhotoMultiplier:public virtual PhotoMultiplier_Efficiency1par<3,FuncFromFile>
