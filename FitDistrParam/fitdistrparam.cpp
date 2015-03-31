@@ -20,10 +20,10 @@ double distr_old(double x, double sigma,double decay){
 	auto B=[decay](double t){if(t<0)return 0.0;return exp(-t/decay);};
 	return Sympson([x,sigma,decay,A,B](double ksi){return A(ksi)*B(x-ksi);},-20.0,20.0,0.01);
 }
-double sigma_old=0.20;
-double decay_old=1.50;
-double new_rise_t=0.01;
 int main(int , char **){
+	double sigma_old=0.20;
+	double decay_old=1.50;
+	double new_rise_t=0.01;
 	SingleParam<double,0,double,double,double> A(distr_old,INFINITY,sigma_old,decay_old);
 	auto points=make_shared<SquareDiff>();
 	for(double x=0; x<=10; x+=0.2)

@@ -21,16 +21,23 @@ FuncFromFile::FuncFromFile(QString name, uint xc, uint yc){
 			QStringList cols=line.replace(',',' ').replace(';',' ').replace('\t',' ').split(' ');
 			bool ok=false;
 			double x=cols[xc].toDouble(&ok);
-			double y=cols[yc].toDouble(&ok);
-			m_func<<std::make_pair(x,y);
+			if(ok){
+				double y=cols[yc].toDouble(&ok);
+				if(ok)
+					m_func<<std::make_pair(x,y);
+			}
 		}
 		file.close();
+	}else{
+		throw;
 	}
 	K=1;
 }
 FuncFromFile::~FuncFromFile(){}
 void FuncFromFile::MultiplyBy(double k){K=k;}
 double FuncFromFile::operator ()(double x){
+	if(x==m_func[0].first)
+		return m_func[0].second;
 	return m_func(x);
 }
 double FuncFromFile::Min(){return m_func[0].first;}
