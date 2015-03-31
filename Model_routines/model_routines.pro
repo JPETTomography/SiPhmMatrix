@@ -1,4 +1,5 @@
 include("../qt_build.pri")
+include("../lighting.pri")
 QMAKE_CXXFLAGS+= -std=c++11
 INCLUDEPATH += ..
 #root

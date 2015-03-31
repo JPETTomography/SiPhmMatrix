@@ -1,6 +1,3 @@
-#include <QFile>
-#include <QTextStream>
-#include <QProcess>
 #include <stdio.h>
 #include <memory>
 #include <genetic.h>
@@ -33,41 +30,14 @@ int main(int , char **){
 		points->Add(ParamSet(x),A(x));
 	DifferentialRandomMutations<> fit(make_shared<ParameterFunction<>>([&new_rise_t](ParamSet &X,ParamSet &P){
 			return distr_actual(X[0],new_rise_t,P[0],P[1]);
-	}),points,2);
+	}),points,1);
 	fit.SetFilter(make_shared<Above>()<<0<<0);
 	auto initial=make_shared<GenerateByGauss>()
 			<<make_pair(sigma_old,sigma_old*0.1)
 		   <<make_pair(decay_old,decay_old*0.1);
-	fit.Init(30,initial);
+	fit.Init(10,initial);
 	while(!fit.ConcentratedInOnePoint())
 		fit.Iterate();
-	printf("%f,%f,%f\n",new_rise_t,fit[0],fit[1]);
-	{QFile file("output.txt");QFile file2("output2.txt");
-		file.open(QFile::WriteOnly);file2.open(QFile::WriteOnly);
-		if((file.isOpen())&&(file2.isOpen())){
-			QTextStream str(&file);QTextStream str2(&file2);
-			for(double x=-1; x<=10; x+=0.01){
-				str <<x<<" " << A(x) <<"\n";
-				str2<<x<<" " << fit(ParamSet(x)) <<"\n";
-			}
-			file.close();file2.close();
-		}
-	}
-	{QString script=".plotscript.gp";
-		QFile file(script);
-		file.open(QFile::WriteOnly);
-		if(file.isOpen()){
-			QTextStream str(&file);
-			str << "plot ";
-			str <<"\"output.txt\" w l title \"old params\"";
-			str << ",\\\n";
-			str <<"\"output2.txt\" w l title \"new params\"";
-			str << "\n";
-			str<<"\npause -1";
-			file.close();
-		}
-		QProcess *gnuplot=new QProcess();
-		gnuplot->startDetached("gnuplot",QStringList()<<script);
-	}
+	printf("DEFINES+=lighting_params=%f,%f,%f\n",new_rise_t,fit[0],fit[1]);
 	return 0;
 }

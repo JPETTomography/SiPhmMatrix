@@ -2,6 +2,7 @@
 bin
 build-*
 *_app*
+lighting.pri
 qt_build.pri
 output*.txt
 *.output.txt

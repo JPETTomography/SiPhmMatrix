@@ -1,4 +1,9 @@
 #/bin/bash
+echo "COMPILING PREPARING APPLICATION..."
+(cd FitGen; cmake .;make clean all)
+(cd FitDistrParam; qmake FitDistrParam.pro;make clean all)
+echo "FITTING EMITION TIME DISTRIBUTION PARAMETERS..."
+FitDistrParam/fitdistrparam_app > lighting.pri
 echo "COMPILING..."
 (cd LongScintillator;./buildme.sh)
 if (( $? )); then exit 1; fi
@@ -6,8 +11,6 @@ if (( $? )); then exit 1; fi
 if (( $? )); then exit 1; fi
 (cd ModelScin;qmake ModelScin.pro;make clean; make)
 (cd ModelScin_coord;qmake ModelScin_coord.pro;make clean; make)
-(cd FitGen; cmake .;make clean all)
-(cd FitDistrParam; qmake FitDistrParam.pro;make clean all)
 if [ $# -ne 1 ]; then
     echo "Binaries are not copied"
     exit
