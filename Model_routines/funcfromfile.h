@@ -1,7 +1,7 @@
 #ifndef FUNCFROMFILE_H
 #define FUNCFROMFILE_H
 #include <QString>
-#include <QList>
+#include <LongScintillator/math_h/interpolate.h>
 #include <TGraph.h>
 class FuncFromFile{
 public:
@@ -15,7 +15,7 @@ public:
 	double Max();
 	TGraph* Display(QString title);
 private:
-	QList<double> X,Y;
+	LinearInterpolation<double> m_func;
 	double K;
 	QString Name;
 };

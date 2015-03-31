@@ -1,13 +1,12 @@
 #include <QFile>
 #include <QTextStream>
 #include <QStringList>
-#include "funcfromfile.h"
+#include <utility>
 #include <LongScintillator/math_h/interpolate.h>
+#include "funcfromfile.h"
 FuncFromFile::FuncFromFile(){K=1;Name="";}
 FuncFromFile::FuncFromFile(FuncFromFile &f){
-	for(int i=0; i<f.X.count();i++){
-		X.append(f.X[i]);Y.append(f.Y[i]);
-	}
+	m_func=f.m_func;
 	K=f.K;
 	Name=f.Name;
 }
@@ -23,9 +22,7 @@ FuncFromFile::FuncFromFile(QString name, uint xc, uint yc){
 			bool ok=false;
 			double x=cols[xc].toDouble(&ok);
 			double y=cols[yc].toDouble(&ok);
-			int index=WhereToInsert(0,X.count()-1,X,x);
-			X.insert(index,x);
-			Y.insert(index,y);
+			m_func<<std::make_pair(x,y);
 		}
 		file.close();
 	}
@@ -34,14 +31,17 @@ FuncFromFile::FuncFromFile(QString name, uint xc, uint yc){
 FuncFromFile::~FuncFromFile(){}
 void FuncFromFile::MultiplyBy(double k){K=k;}
 double FuncFromFile::operator ()(double x){
-	return Interpolate_Linear(0,X.count()-1,X,Y,x)*K;
+	return m_func(x);
 }
-double FuncFromFile::Min(){return X[0];}
-double FuncFromFile::Max(){return X[X.count()-1];}
+double FuncFromFile::Min(){return m_func[0].first;}
+double FuncFromFile::Max(){return m_func[m_func.size()-1].first;}
 TGraph *FuncFromFile::Display(QString title){
-	TGraph *gr=new TGraph(X.count());
-	for(int i=0; i<X.count();i++)
-		gr->SetPoint(i,X[i],(*this)(X[i]));
+	TGraph *gr=new TGraph(m_func.size());
+	int i=0;
+	for(auto p:m_func){
+		gr->SetPoint(i,p.first,p.second);
+		i++;
+	}
 	gr->SetNameTitle(Name.toStdString().c_str(),title.toStdString().c_str());
 	gr->SetLineWidth(2);
 	gr->SetMarkerStyle(0);
