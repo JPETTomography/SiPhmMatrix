@@ -29,7 +29,7 @@ double new_rise_t=0.01;
 int main(int , char **){
 	SingleParam<double,0,double,double,double> A(distr_old,INFINITY,sigma_old,decay_old);
 	auto points=make_shared<SquareDiff>();
-	for(double x=0.1; x<=10; x+=0.2)
+	for(double x=0; x<=10; x+=0.2)
 		points->Add(ParamSet(x),A(x));
 	DifferentialRandomMutations<> fit(make_shared<ParameterFunction<>>([&new_rise_t](ParamSet &X,ParamSet &P){
 			return distr_actual(X[0],new_rise_t,P[0],P[1]);
@@ -42,8 +42,7 @@ int main(int , char **){
 	while(!fit.ConcentratedInOnePoint())
 		fit.Iterate();
 	printf("%f,%f,%f\n",new_rise_t,fit[0],fit[1]);
-	SingleParam<double,0,double,double,double,double> B(distr_actual,INFINITY,0.005,0.20,1.50);
-	{QFile file("output.txt");QFile file2("output2.txt");QFile file3("output3.txt");
+	{QFile file("output.txt");QFile file2("output2.txt");
 		file.open(QFile::WriteOnly);file2.open(QFile::WriteOnly);
 		if((file.isOpen())&&(file2.isOpen())){
 			QTextStream str(&file);QTextStream str2(&file2);
