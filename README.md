@@ -2,7 +2,7 @@ J-PET Monte Carlo simulations
 ===========
 
 required packages:
-libqt4, libqt4-dev, make, ROOT (both libraries and develop package)
+libqt4, libqt4-dev, cmake, make, ROOT (both libraries and develop package)
 
 LongScintillator - library that implements simulation of emitted 
 	photons movement in long scintillator with two 
