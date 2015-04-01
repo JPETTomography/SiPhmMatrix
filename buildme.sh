@@ -3,7 +3,8 @@ echo "COMPILING PREPARING APPLICATION..."
 (cd FitGen; cmake .;make clean all)
 (cd FitDistrParam; qmake FitDistrParam.pro;make clean all)
 echo "FITTING EMITION TIME DISTRIBUTION PARAMETERS..."
-FitDistrParam/fitdistrparam_app > lighting.pri
+(export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:FitGen;FitDistrParam/fitdistrparam_app > lighting.pri)
+echo "parameters saved."
 echo "COMPILING..."
 (cd LongScintillator;./buildme.sh)
 if (( $? )); then exit 1; fi
