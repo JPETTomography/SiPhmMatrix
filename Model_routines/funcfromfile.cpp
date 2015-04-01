@@ -36,8 +36,10 @@ FuncFromFile::FuncFromFile(QString name, uint xc, uint yc){
 FuncFromFile::~FuncFromFile(){}
 void FuncFromFile::MultiplyBy(double k){K=k;}
 double FuncFromFile::operator ()(double x){
-	if(x==m_func[0].first)
+	if(x<=m_func[0].first)
 		return m_func[0].second;
+	if(x>=m_func[m_func.size()-1].first)
+		return m_func[m_func.size()-1].second;
 	return m_func(x);
 }
 double FuncFromFile::Min(){return m_func[0].first;}
