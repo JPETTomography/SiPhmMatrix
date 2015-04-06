@@ -30,7 +30,7 @@ int main(int , char **){
 		points<<make_pair(x,A(x));
 	DifferentialRandomMutations<> fit(make_shared<ParameterFunction<>>([&new_rise_t](ParamSet &X,ParamSet &P){
 		return distr_actual(X[0],new_rise_t,P[0],P[1]);
-	}),ChiSquare(points),1);
+	}),SquareDiff(points),1);
 	fit.SetFilter(make_shared<Above>()<<0<<0);
 	auto initial=make_shared<GenerateByGauss>()
 			<<make_pair(sigma_old,sigma_old*0.1)
