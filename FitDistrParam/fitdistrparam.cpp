@@ -25,12 +25,12 @@ int main(int , char **){
 	double decay_old=1.50;
 	double new_rise_t=0.01;
 	SingleParam<double,0,double,double,double> A(distr_old,INFINITY,sigma_old,decay_old);
-	auto points=make_shared<SquareDiff>();
+	auto points=make_shared<FitPoints>();
 	for(double x=0; x<=10; x+=0.2)
-		points->Add(ParamSet(x),A(x));
+		points<<make_pair(x,A(x));
 	DifferentialRandomMutations<> fit(make_shared<ParameterFunction<>>([&new_rise_t](ParamSet &X,ParamSet &P){
-			return distr_actual(X[0],new_rise_t,P[0],P[1]);
-	}),points,1);
+		return distr_actual(X[0],new_rise_t,P[0],P[1]);
+	}),ChiSquare(points),1);
 	fit.SetFilter(make_shared<Above>()<<0<<0);
 	auto initial=make_shared<GenerateByGauss>()
 			<<make_pair(sigma_old,sigma_old*0.1)
