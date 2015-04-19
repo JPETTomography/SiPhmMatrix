@@ -1,6 +1,6 @@
 [submodule "LongScintillator"]
 	path = LongScintillator
 	url = https://github.com/alexkernphysiker/LongScintillator.git
-[submodule "FitGen"]
-	path = FitGen
+[submodule "FitDistrParam/FitGen"]
+	path = FitDistrParam/FitGen
 	url = http://github.com/alexkernphysiker/FitGen.git
