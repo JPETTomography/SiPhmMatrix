@@ -12,6 +12,13 @@ data.sorting.*
 *.png
 *.autosave
 
+#cmake
+*.txt.user
+CMakeCache*
+CMakeFiles*
+*.cbp
+*.cmake
+
 # Compiled Object files
 *.slo
 *.lo

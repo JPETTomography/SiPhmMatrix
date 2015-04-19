@@ -1,7 +1,6 @@
 #/bin/bash
 echo "COMPILING PREPARING APPLICATION..."
-(cd FitGen; cmake .;make clean all)
-(cd FitDistrParam; qmake FitDistrParam.pro;make clean all)
+(cd FitDistrParam; cmake .;make)
 echo "FITTING EMITION TIME DISTRIBUTION PARAMETERS..."
 (export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:FitGen;FitDistrParam/fitdistrparam_app > lighting.pri)
 echo "parameters saved."

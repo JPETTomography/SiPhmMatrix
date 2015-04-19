@@ -1,15 +1,14 @@
 #include <stdio.h>
 #include <memory>
-#include <genetic.h>
+#include <fit.h>
 #include <initialconditions.h>
 #include <filter.h>
-#include <fitpoints.h>
 #include <math_h/sympson.h>
 #include <math_h/interpolate.h>
 #include <math_h/singleparam.h>
 #include <math_h/functions.h>
 using namespace std;
-using namespace Fit;
+using namespace Genetic;
 double distr_actual(double x, double rize, double sigma, double decay){
 	auto A=[sigma](double t){if(t<0)return 0.0;return Gaussian(t,2.5*sigma,sigma);};
 	auto B=[rize,decay](double t){if(t<0)return 0.0;return exp(-t/decay)-exp(-t/rize);};
@@ -28,9 +27,9 @@ int main(int , char **){
 	auto points=make_shared<FitPoints>();
 	for(double x=0; x<=10; x+=0.2)
 		points<<make_pair(x,A(x));
-	DifferentialRandomMutations<> fit(make_shared<ParameterFunction<>>([&new_rise_t](ParamSet &X,ParamSet &P){
+	Fit<DifferentialMutations<>,ChiSquare> fit(points,[&new_rise_t](ParamSet &X,ParamSet &P){
 		return distr_actual(X[0],new_rise_t,P[0],P[1]);
-	}),SquareDiff(points),1);
+	});
 	fit.SetFilter(make_shared<Above>()<<0<<0);
 	auto initial=make_shared<GenerateByGauss>()
 			<<make_pair(sigma_old,sigma_old*0.1)

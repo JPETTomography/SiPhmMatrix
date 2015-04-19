@@ -1,0 +1,8 @@
+cmake_minimum_required(VERSION 2.6)
+project(FitDistrParam)
+add_definitions(-DUSE_RANDOM_DEVICE)
+add_subdirectory(FitGen)
+include_directories(FitGen)
+set(CMAKE_CXX_FLAGS "-pthread -std=gnu++11")
+add_executable(fitdistrparam_app fitdistrparam.cpp)
+target_link_libraries(fitdistrparam_app FitGen)
