@@ -22,7 +22,7 @@ double distr_old(double x, double sigma,double decay){
 int main(int , char **){
 	double sigma_old=0.20;
 	double decay_old=1.50;
-	double new_rise_t=0.01;
+	double new_rise_t=0.005;
 	SingleParam<double,0,double,double,double> A(distr_old,INFINITY,sigma_old,decay_old);
 	auto points=make_shared<FitPoints>();
 	for(double x=0; x<=10; x+=0.2)
