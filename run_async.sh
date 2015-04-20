@@ -7,4 +7,5 @@ echo Running all programs in background every application in separate thread...
 ./ModelScin_app > run.r4998.log &
 ./ModelScin_coord_app > run.si.log &
 ./ModelScin_coord_2_app > run.si_2.log &
+./theory_app > run.theory.log &
 echo DONE!!!

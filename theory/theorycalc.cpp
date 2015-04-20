@@ -48,18 +48,26 @@ int main(int , char **){
 		file.open(QFile::WriteOnly);
 		if(file.isOpen()){
 			QTextStream str(&file);
-			str<<"set terminal pngcairo size 800,600 enhanced font 'Verdana,10'\n";
+			str<<"set terminal pngcairo size 800,600 enhanced monochrome font 'Verdana,10'\n";
 			str<<"set output 'theory_estimation.png'\n";
 			str<<"set xlabel 'Number of emitted photons'\n";
 			str<<"set ylabel 'Lower limit [ns]'\n";
 			str<<"set logscale x\n";
 			str<<"set logscale y\n";
+			QStringList colors;
+			colors<<"rgb 'black'"<<"rgb 'black'"<<"rgb 'gray'"<<"rgb 'gray'";
+			QStringList types;
+			types<<"1"<<"0"<<"1"<<"0";
+			QStringList widths;
+			widths<<"1"<<"3"<<"1"<<"3";
+			for(uint l=0;l<=n_exp;l++)
+				str<<"set style line "<<l+1<<" lt "<<types[l]<<" linecolor "<<colors[l]<<" lw "<<widths[l]<<"\n";
 			str << "plot ";
-			str <<"\"theory.output.txt\" w l title \"emission\"";
+			str <<"\"theory.output.txt\" w l ls 1 title \"emission\"";
 			for(uint l=0; l<n_exp;l++){
 				double z=L[l];
 				str << ",\\\n";
-				str <<"\"theory."<<z<<".output.txt\" w l title \""<<z/10<<" cm\"";
+				str <<"\"theory."<<z<<".output.txt\" w l ls "<<l+2<<" title \""<<z/10<<" cm\"";
 			}
 			str << ",\\\n";
 			str << "\"<echo '200 0.08'\" with points title \"Experiment\"";
@@ -67,7 +75,7 @@ int main(int , char **){
 			file.close();
 		}
 		QProcess *gnuplot=new QProcess();
-		gnuplot->startDetached("gnuplot",QStringList()<<script<<"-gray");
+		gnuplot->startDetached("gnuplot",QStringList()<<script);
 	}
 	return 0;
 }
