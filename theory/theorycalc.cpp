@@ -60,7 +60,7 @@ int main(int , char **){
 				str <<"\"theory."<<z<<".output.txt\" w l title \""<<z/10<<" cm\"";
 			}
 			str << ",\\\n";
-			str << "\"<echo '200 0.8'\" with points title \"Experiment\"";
+			str << "\"<echo '200 0.08'\" with points title \"Experiment\"";
 			str<<"\npause -1";
 			file.close();
 		}
