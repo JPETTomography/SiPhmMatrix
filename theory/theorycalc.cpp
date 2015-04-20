@@ -48,6 +48,7 @@ int main(int , char **){
 		file.open(QFile::WriteOnly);
 		if(file.isOpen()){
 			QTextStream str(&file);
+			str<<"set terminal \n";
 			str<<"set xlabel 'Number of emitted photons'\n";
 			str<<"set ylabel 'Lower limit [ns]'\n";
 			str<<"set logscale x\n";

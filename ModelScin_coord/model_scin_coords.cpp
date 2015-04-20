@@ -22,7 +22,7 @@ int main(int , char **arg){
 		MultRowColC cntphotons(photomult,ConstrParams(phm_x,phm_y,phm_dead));
 		X_lighting[1]=X_lighting[2]=0;
 		scintillator->RegisterLighting(X_lighting,1000000);
-		TH1F *hist=new TH1F("","",phm_x*phm_y,-0.5,double(phm_x*phm_y)+0.5);
+		TH1F *hist=new TH1F("","",phm_x*phm_y+1,-0.5,double(phm_x*phm_y)+0.5);
 		for(int px=0;px<phm_x;px++)
 			for(int py=0;py<phm_y;py++){
 				int i=px*phm_y+py;
