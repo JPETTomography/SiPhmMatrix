@@ -18,6 +18,23 @@ int main(int , char **arg){
 		for(uint k=0; k<=K; k++)sig_time_diff[k]=new double[n];
 	LongScintillator *scintillator=CreateScintillatorBC420_4Si_matrix();
 	AbstractPhotoMultiplier *photomult=CreateSiliconPhotoMultiplier(scintillator);
+	{
+		MultRowColC cntphotons(photomult,ConstrParams(phm_x,phm_y,phm_dead));
+		X_lighting[1]=X_lighting[2]=0;
+		scintillator->RegisterLighting(X_lighting,200000);
+		TH1F *hist=new TH1F("","",phm_x*phm_y+1,0,phm_x*phm_y+1);
+		for(int px=0;px<phm_x;px++)
+			for(int py=0;py<phm_y;py++){
+				int i=px*phm_y+py;
+				for(int c=0,cnt=cntphotons[px][py].LeftCount();c<cnt;c++)
+					hist->Fill(i);
+			}
+		hist->SetTitle("");
+		hist->GetXaxis()->SetTitle("Photomultiplier ID");
+		hist->GetYaxis()->SetTitle("Counts");
+		hist->GetYaxis()->SetLimits(0,800);
+		DisplayObject("Photon_number_distribution.png",hist);
+	}
 	LongScintillator *scintillator2=CreateScintillatorBC420_4Si_matrix();
 	AbstractPhotoMultiplier *photomult2=CreateSiliconPhotoMultiplier(scintillator2);
 	for(int index=0; index<n;index++ ){
