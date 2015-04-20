@@ -8,4 +8,5 @@ echo Running all programs
 ./ModelScin_coord_app
 ./ModelScin_coord_2_app
 ./theory_app
+./Comparement_app
 echo DONE!!!
