@@ -1,11 +1,12 @@
 #include <QFile>
 #include <QTextStream>
 #include <QProcess>
+#include <TH1F.h>
 #include <LongScintillator/scintillator3d.h>
 #include <LongScintillator/photoncounters.h>
 #include <Model_routines/theory.cc>
-const uint n=23;
-uint N[]={2, 3, 4,5,6,7,8,9, 10, 20, 50, 100, 200, 500, 1000, 1800, 2000, 3000, 3410, 4000,5000,6000, 10000 };
+const uint n=24;
+uint N[]={1,2, 3, 4,5,6,7,8,9, 10, 20, 50, 100, 200, 500, 1000, 1800, 2000, 3000, 3410, 4000,5000,6000, 10000 };
 const uint n_exp=3;
 double L[]={300,500,1000};
 int main(int , char **){
@@ -14,6 +15,13 @@ int main(int , char **){
 		file.open(QFile::WriteOnly);
 		if(file.isOpen()){
 			TheorResolutionCalc debug(&scintillator);
+			{
+				auto F=[&debug](double x){return debug.LightingTimeDistr(x);};
+				double norm=Sympson(F,0.0,39.0,0.005);
+				double avr=Sympson([F,&norm](double x){return F(x)*x/norm;},0.0,39.0,0.005);
+				double sigma=Sympson([F,&norm,&avr](double x){return pow(x-avr,2)*F(x)/norm;},0.0,39.0,0.005);
+				Printf("Distribution parameters: average=%f; sigma=%f\n",avr,sqrt(sigma));
+			}
 			auto emission=[&debug](uint N_photons){
 				return 4.0*debug.MinimalLightingSigma(N_photons);
 			};
