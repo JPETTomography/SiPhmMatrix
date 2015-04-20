@@ -48,7 +48,8 @@ int main(int , char **){
 		file.open(QFile::WriteOnly);
 		if(file.isOpen()){
 			QTextStream str(&file);
-			str<<"set terminal \n";
+			str<<"set terminal pngcairo size 800,600 enhanced font 'Verdana,10'\n";
+			str<<"set output 'theory_estimation.png'\n";
 			str<<"set xlabel 'Number of emitted photons'\n";
 			str<<"set ylabel 'Lower limit [ns]'\n";
 			str<<"set logscale x\n";
@@ -66,7 +67,7 @@ int main(int , char **){
 			file.close();
 		}
 		QProcess *gnuplot=new QProcess();
-		gnuplot->startDetached("gnuplot",QStringList()<<script);
+		gnuplot->startDetached("gnuplot",QStringList()<<script<<"-gray");
 	}
 	return 0;
 }
