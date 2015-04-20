@@ -9,7 +9,6 @@
 #include <LongScintillator/scintillator_templates.h>
 #include <LongScintillator/math_h/randomfunc.h>
 #include <LongScintillator/math_h/interpolate.h>
-#include <Model_routines/theory.cc>
 const uint this_K_=1000;
 int main(int , char **arg){
 	Printf(arg[0]);
@@ -18,10 +17,9 @@ int main(int , char **arg){
 	LongScintillator *scintillator2=CreateIdealScintillator(0);
 	double X_lighting[3];X_lighting[0]=0;
 	double n_ph[n];
-	double* sig_time_diff[K+2];
+	double* sig_time_diff[K+1];
 	for(uint k=0; k<=K+1; k++)
 		sig_time_diff[k]=new double[n];
-	TheorResolutionCalc debug(scintillator2);
 	for(int index=0; index<n;index++ ){
 		uint N_photons=(index*step)+ideal_begin;
 		Printf(QDateTime::currentDateTime().toString().toStdString().c_str());
@@ -89,9 +87,7 @@ int main(int , char **arg){
 				DisplayObject(Form("rozpodzial_%i_%i.png",N_photons,k),hist[k]);
 		}
 		sig_time_diff[K][index]=signal_diff.ResolutionSignal();
-		sig_time_diff[K+1][index]=2.0*debug.MinimalLightingSigma(N_photons/2);
 		Printf("Sigma: %f",sig_time_diff[K][index]);
-		Printf("Sigma_th: %f",sig_time_diff[K+1][index]);
 	}
 	Printf("CALCULATION FINISHED. DISPLAYING RESULTS");
 	displaygraph(MakeGraph(K+1,n,n_ph,sig_time_diff,"diffgr",""),n,n_ph);
