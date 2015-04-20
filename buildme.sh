@@ -12,6 +12,7 @@ if (( $? )); then exit 1; fi
 (cd ModelScin_ideal;qmake ModelScin_ideal.pro;make)
 (cd ModelScin_sigma_l;qmake ModelScin_sigma_l.pro;make)
 (cd theory;qmake theory.pro;make)
+(cd Comparement;qmake Comparement.pro;make)
 if [ $# -ne 1 ]; then
     echo "Binaries are not copied"
     exit
