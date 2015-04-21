@@ -80,7 +80,7 @@ int main(int , char **){
 		file.open(QFile::WriteOnly);
 		if(file.isOpen()){
 			QTextStream str(&file);
-			str<<"set terminal pngcairo size 800,600 enhanced monochrome font 'Verdana,16'\n";
+			str<<"set terminal pngcairo size 800,600 enhanced monochrome font 'Verdana,18'\n";
 			str<<"set output 'theory_estimation.png'\n";
 			str<<"set xlabel 'Number of emitted photons'\n";
 			str<<"set ylabel 'Lower limit [ns]'\n";
