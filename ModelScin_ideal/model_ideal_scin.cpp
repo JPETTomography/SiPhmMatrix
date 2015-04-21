@@ -107,7 +107,7 @@ int main(int , char **arg){
 	}
 	Printf("DONE.");
 	Printf(QDateTime::currentDateTime().toString().toStdString().c_str());
-	for(uint k=0; k<=K+1; k++)
+	for(uint k=0; k<K+1; k++)
 		delete[] sig_time_diff[k];
 	delete scintillator;
 	delete scintillator2;
