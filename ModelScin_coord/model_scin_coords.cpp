@@ -22,18 +22,22 @@ int main(int , char **arg){
 		MultRowColC cntphotons(photomult,ConstrParams(phm_x,phm_y,phm_dead));
 		X_lighting[1]=X_lighting[2]=0;
 		scintillator->RegisterLighting(X_lighting,1000000);
-		TH1F *hist=new TH1F("","",phm_x*phm_y+1,-0.5,double(phm_x*phm_y)+0.5);
+		TH1F *hist=new TH1F("","",phm_x*phm_y+1,0.5,double(phm_x*phm_y)+1.5);
 		for(int px=0;px<phm_x;px++)
 			for(int py=0;py<phm_y;py++){
 				int i=px*phm_y+py;
 				for(int c=0,cnt=cntphotons[px][py].LeftCount();c<cnt;c++)
-					hist->Fill(i);
+					hist->Fill(i+1);
 			}
 		hist->SetTitle("");
 		hist->GetXaxis()->SetTitle("Photomultiplier ID");
 		hist->GetYaxis()->SetTitle("Counts");
 		hist->GetYaxis()->SetTitleOffset(1.5);
 		hist->SetStats(0);
+		hist->GetXaxis()->SetLabelSize(0.05);
+		hist->GetYaxis()->SetLabelSize(0.04);
+		hist->GetXaxis()->SetTitleSize(0.05);
+		hist->GetYaxis()->SetTitleSize(0.05);
 		DisplayObject("Photon_number_distribution.png",hist,"");
 	}
 	LongScintillator *scintillator2=CreateScintillatorBC420_4Si_matrix();
