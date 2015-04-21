@@ -15,36 +15,30 @@ const QString efficiencycurve="ModelData/tube_QE.txt";
 const QString efficiencycurve2="ModelData/Si_PhM_QE.txt";
 const QString absorbtioncurve="ModelData/absorption_coef_cm-1.txt";
 const QString absorbtioncurve2="ModelData/EJ230_absorption_length.txt";
-FuncFromFile wl(emissioncurve);FuncFromFile wl2(emissioncurve2);
-FuncFromFile absor(absorbtioncurve,0,2);bool done_abs=false;
-FuncFromFile attenuation(absorbtioncurve2);bool done_abs2=false;
+FuncFromFile wl(emissioncurve,1);
+FuncFromFile wl2(emissioncurve2,1);
+FuncFromFile absor(absorbtioncurve,0.18,0,2);
+FuncFromFile attenuation(absorbtioncurve2,10);
 double absor2(double wavelength){return 1.0/attenuation(wavelength);}
-FuncFromFile eff(efficiencycurve);bool done_eff=true;//is in needed units already
-FuncFromFile eff2(efficiencycurve2);bool done_eff2=false;
-LongScintillator* CreateScintillatorEJ230(double length){
+FuncFromFile eff(efficiencycurve,0.01);
+FuncFromFile eff2(efficiencycurve2,0.01);
 #define params double,double,double,ScinLightingParamsTypes
-	if(!done_abs2){attenuation.MultiplyBy(10);done_abs2=true;}//SCALING!!!
+LongScintillator* CreateScintillatorEJ230(double length){
 	return new AbsorptionCoef<Scintillator3D_rect,decltype(absor2)*,3,params>
 			(&absor2,[](double w){return wl2(w);},wl2.Min(),wl2.Max(),0.01,length,scin_hwx,scin_hwy,scin_refr,lighting_params);
-#undef params
 }
 LongScintillator* CreateIdealScintillator(double length){
 	return new Scintillator3D_rect(length,scin_hwx,scin_hwy,scin_refr,lighting_params);
 }
 LongScintillator* CreateScintillatorBC420(double length){
-	if(!done_abs){absor.MultiplyBy(0.18);done_abs=true;}//SCALING!!!
-#define params double,double,double,ScinLightingParamsTypes
 	return new AbsorptionCoef<Scintillator3D_rect,decltype(absor),3,params>
 			(absor,[](double w){return wl(w);},wl.Min(),wl.Max(),0.01,length,scin_hwx,scin_hwy,scin_refr,lighting_params);
-#undef params
 }
 LongScintillator* CreateScintillatorBC420_4Si_matrix(double length){
-	if(!done_abs){absor.MultiplyBy(0.18);done_abs=true;}//SCALING!!!
-#define params double,double,double,ScinLightingParamsTypes
 	return new AbsorptionCoef<Scintillator3D_rect,FuncFromFile,3,params>
 			(absor,[](double w){return wl(w);},wl.Min(),wl.Max(),0.01,length,scin_hwx_si,scin_hwy_si,scin_refr,lighting_params);
-#undef params
 }
+#undef params
 class PhotoMultiplier:public virtual PhotoMultiplier_Efficiency1par<3,FuncFromFile>
 		,public virtual PhotoMultiplierConstTimeRes{
 public:
@@ -76,16 +70,12 @@ double ValueCnt(MultRowColC* master, int i2){
 }
 
 AbstractPhotoMultiplier* CreateTubePhotoMultiplier(IPhoton *source){
-	if(!done_eff){eff.MultiplyBy(0.01);done_eff=true;}
 	return new PhotoMultiplier(source,eff,phm_res_R);
 }
 AbstractPhotoMultiplier* CreateSiliconPhotoMultiplier(IPhoton *source){
-	if(!done_eff2){eff2.MultiplyBy(0.01);done_eff2=true;}
 	return new PhotoMultiplier(source,eff2,phm_res_si);
 }
 void DisplayPlots(){
-	if(!done_eff){eff.MultiplyBy(0.01);done_eff=true;}
-	if(!done_eff2){eff2.MultiplyBy(0.01);done_eff2=true;}
 	DisplayObject("test1.png",wl.Display("Emission"));
 	{
 	  TGraph* gr2=wl.Display("Emission");

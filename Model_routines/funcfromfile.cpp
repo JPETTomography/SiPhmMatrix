@@ -10,7 +10,7 @@ FuncFromFile::FuncFromFile(FuncFromFile &f){
 	K=f.K;
 	Name=f.Name;
 }
-FuncFromFile::FuncFromFile(QString name, uint xc, uint yc){
+FuncFromFile::FuncFromFile(QString name, double k, uint xc, uint yc){
 	Name=name;
 	QFile file(Name);
 	file.open(QIODevice::ReadOnly);
@@ -31,10 +31,9 @@ FuncFromFile::FuncFromFile(QString name, uint xc, uint yc){
 	}else{
 		throw;
 	}
-	K=1;
+	K=k;
 }
 FuncFromFile::~FuncFromFile(){}
-void FuncFromFile::MultiplyBy(double k){K=k;}
 double FuncFromFile::operator ()(double x){
 	return m_func(x);
 }
