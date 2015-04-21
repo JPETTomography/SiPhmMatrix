@@ -99,7 +99,7 @@ int main(int , char **arg){
 		QTextStream str(&file);
 		for(int i=0; i<n; i++){
 			str<<n_ph[i];
-			for(uint k=0;k<=K+1;k++)
+			for(uint k=0;k<K+1;k++)
 				str<<" "<<sig_time_diff[k][i];
 			str<<"\n";
 		}
