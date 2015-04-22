@@ -35,7 +35,7 @@ FuncFromFile::FuncFromFile(QString name, double k, uint xc, uint yc){
 }
 FuncFromFile::~FuncFromFile(){}
 double FuncFromFile::operator ()(double x){
-	return m_func(x);
+	return m_func(x)*K;
 }
 double FuncFromFile::Min(){return m_func[0].first;}
 double FuncFromFile::Max(){return m_func[m_func.size()-1].first;}
