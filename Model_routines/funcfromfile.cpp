@@ -43,7 +43,7 @@ TGraph *FuncFromFile::Display(QString title){
 	TGraph *gr=new TGraph(m_func.size());
 	int i=0;
 	for(auto p:m_func){
-		gr->SetPoint(i,p.first,p.second);
+		gr->SetPoint(i,p.first,p.second*K);
 		i++;
 	}
 	gr->SetNameTitle(Name.toStdString().c_str(),title.toStdString().c_str());
