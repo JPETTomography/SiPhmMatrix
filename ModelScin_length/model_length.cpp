@@ -11,8 +11,9 @@
 #include <LongScintillator/photoncounters.h>
 #include <LongScintillator/math_h/randomfunc.h>
 double lengths[]={test_L};
-EColor colors[]={kBlack,kBlack,kGray,kGray};
-ELineStyle styles[]={kSolid,kDashed,kSolid,kDashed};
+Width_t widths[]={2,2,1,1};
+EColor colors[]={kBlack,kBlack,kBlack,kBlack};
+ELineStyle styles[]={kSolid,kDashed,kSolid,kDotted};
 int main(int , char **arg){
 	Printf(arg[0]);
 	Printf(QDateTime::currentDateTime().toString().toStdString().c_str());
@@ -24,7 +25,7 @@ int main(int , char **arg){
 		double coords[3];coords[0]=lengths[index];
 		Printf(QDateTime::currentDateTime().toString().toStdString().c_str());
 		Printf("Monte Carlo for L=%f (%i photons; %i events)",lengths[index],n_widm,events_number);
-		timehist.StartHist("",100,0,20);
+		timehist.StartHist("",400,0,20);
 		for(uint cnt=0; cnt<events_number;cnt++){
 			if(0==((cnt+1)%1000))Printf("\texperiment number %i...",cnt+1);
 			coords[1]=RandomUniformly(-scin_hwx,scin_hwx);
@@ -37,7 +38,7 @@ int main(int , char **arg){
 		graph->SetMarkerSize(0);
 		graph->SetMarkerColor(colors[index]);
 		graph->SetLineColor(colors[index]);
-		graph->SetLineWidth(2);
+		graph->SetLineWidth(widths[index]);
 		graph->SetLineStyle(styles[index]);
 	}
 	DisplayTimeHists("Fig_1_time_distr.png",distr,max);

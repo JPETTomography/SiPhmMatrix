@@ -87,11 +87,11 @@ int main(int , char **){
 			str<<"set logscale x\n";
 			str<<"set logscale y\n";
 			QStringList colors;
-			colors<<"rgb 'black'"<<"rgb 'black'"<<"rgb 'gray'"<<"rgb 'gray'";
+			colors<<"rgb 'black'"<<"rgb 'black'"<<"rgb 'black'"<<"rgb 'black'";
 			QStringList types;
 			types<<"1"<<"0"<<"1"<<"0";
 			QStringList widths;
-			widths<<"1"<<"3"<<"1"<<"3";
+			widths<<"3"<<"5"<<"1"<<"2";
 			for(uint l=0;l<=n_exp;l++)
 				str<<"set style line "<<l+1<<" lt "<<types[l]<<" linecolor "<<colors[l]<<" lw "<<widths[l]<<"\n";
 			str << "plot ";

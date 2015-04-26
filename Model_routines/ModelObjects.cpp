@@ -199,7 +199,6 @@ void DisplayTimeHists(std::string name, TMultiGraph *hists, double maxval){
 	TPad pad1("pad1","",0.05,0,1,1);
 	pad1.Draw();
 	pad1.cd();
-	   // draw a frame to define the range
 	TH1F *th1f=c1.DrawFrame(0,0,20,maxval*1.2);
 	th1f->GetYaxis()->SetTitle("Counts");
 	th1f->GetXaxis()->SetTitle("Time [ns]");
@@ -208,9 +207,7 @@ void DisplayTimeHists(std::string name, TMultiGraph *hists, double maxval){
 	th1f->GetYaxis()->SetLabelSize(0.05);
 	th1f->GetYaxis()->SetTitleSize(0.05);
 	th1f->GetYaxis()->SetTitleOffset(1.5);
-	   // create first graph
 	hists->Draw("LP");
-	//make pad2 frame transparent
 	c1.SaveAs(name.c_str());
 	delete hists;
 }
