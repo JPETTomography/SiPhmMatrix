@@ -20,7 +20,7 @@ FuncFromFile wl2(emissioncurve2,1);
 FuncFromFile absor(absorbtioncurve,0.18,0,2);
 FuncFromFile attenuation(absorbtioncurve2,10);
 double absor2(double wavelength){return 1.0/attenuation(wavelength);}
-FuncFromFile eff(efficiencycurve,0.01);
+FuncFromFile eff(efficiencycurve,1);
 FuncFromFile eff2(efficiencycurve2,0.01);
 #define params double,double,double,ScinLightingParamsTypes
 LongScintillator* CreateScintillatorEJ230(double length){
@@ -79,13 +79,15 @@ void DisplayPlots(){
 	DisplayObject("test1.png",wl.Display("Emission"));
 	{
 	  TGraph* gr2=wl.Display("Emission");
-	  gr2->SetLineColor(kGray);
-	  gr2->SetMarkerColor(kGray);
-	  gr2->SetLineWidth(2);
+	  gr2->SetLineColor(kBlack);
+	  gr2->SetMarkerColor(kBlack);
+	  gr2->SetLineWidth(1);
+	  gr2->SetLineStyle(1);
 	  gr2->SetMarkerStyle(0);
 	  gr2->SetMarkerSize(0);
 	  TGaxis *sec_axis=new TGaxis(xmax,ymin,xmax,ymax,ymin,ymax,50510,"+L");
-	  sec_axis->SetLabelColor(kGray);
+	  sec_axis->SetLabelColor(kBlack);
+	  sec_axis->SetLabelSize(0.03);
 	  sec_axis->SetTitle("Emission intensity [a.u.]");
 	  TMultiGraph *mgr=new TMultiGraph();
 	  TGraph* gr0=absor.Display("");
@@ -115,13 +117,15 @@ void DisplayPlots(){
 	  delete gr2;delete sec_axis;
 	 }{
 	  TGraph* gr2=wl.Display("Emission");
-	  gr2->SetLineColor(kGray);
-	  gr2->SetMarkerColor(kGray);
-	  gr2->SetLineWidth(2);
+	  gr2->SetLineColor(kBlack);
+	  gr2->SetMarkerColor(kBlack);
+	  gr2->SetLineWidth(1);
+	  gr2->SetLineStyle(1);
 	  gr2->SetMarkerStyle(0);
 	  gr2->SetMarkerSize(0);
 	  TGaxis *sec_axis=new TGaxis(xmax,ymin,xmax,ymax,ymin,ymax,50510,"+L");
-	  sec_axis->SetLabelColor(kGray);
+	  sec_axis->SetLabelColor(kBlack);
+	  sec_axis->SetLabelSize(0.03);
 	  sec_axis->SetTitle("Emission intensity [a.u.]");
 	  TMultiGraph *mgr=new TMultiGraph();
 	  TGraph* gr0=eff.Display("R4998");
@@ -171,13 +175,15 @@ void DisplayWavelengthHist(TH1F *hist){
 		th1f->SetMarkerSize(0);
 	},new TGraph(hist),"LP",[](TCanvas*,TGraph*){
 		TGraph* gr2=wl.Display("Emission");
-		gr2->SetLineColor(kGray);
-		gr2->SetMarkerColor(kGray);
-		gr2->SetLineWidth(2);
+		gr2->SetLineColor(kBlack);
+		gr2->SetMarkerColor(kBlack);
+		gr2->SetLineWidth(1);
+		gr2->SetLineStyle(1);
 		gr2->SetMarkerStyle(0);
 		gr2->SetMarkerSize(0);
 		TGaxis *sec_axis=new TGaxis(xmax,ymin,xmax,ymax,ymin,ymax,50510,"+L");
-		sec_axis->SetLabelColor(kGray);
+		sec_axis->SetLabelColor(kBlack);
+		sec_axis->SetLabelSize(0.03);
 		sec_axis->SetTitle("Emission intensity [a.u.]");
 		TPad *pad2=new TPad("pad2","",0,0,1,1);
 		pad2->SetFillStyle(4000);
