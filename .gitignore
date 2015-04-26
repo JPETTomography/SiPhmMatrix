@@ -11,6 +11,8 @@ data.sorting.*
 .plotscript.gp
 *.png
 *.autosave
+*.log
+*.txt
 
 #cmake
 *.txt.user
