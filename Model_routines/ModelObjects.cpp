@@ -86,7 +86,7 @@ void DisplayPlots(){
 	  gr2->SetMarkerSize(0);
 	  TGaxis *sec_axis=new TGaxis(xmax,ymin,xmax,ymax,ymin,ymax,50510,"+L");
 	  sec_axis->SetLabelColor(kGray);
-	  sec_axis->SetTitle("Emission intencity [a.u.]");
+	  sec_axis->SetTitle("Emission intensity [a.u.]");
 	  TMultiGraph *mgr=new TMultiGraph();
 	  TGraph* gr0=absor.Display("");
 	  mgr->Add(gr0);
@@ -122,7 +122,7 @@ void DisplayPlots(){
 	  gr2->SetMarkerSize(0);
 	  TGaxis *sec_axis=new TGaxis(xmax,ymin,xmax,ymax,ymin,ymax,50510,"+L");
 	  sec_axis->SetLabelColor(kGray);
-	  sec_axis->SetTitle("Emission intencity [a.u.]");
+	  sec_axis->SetTitle("Emission intensity [a.u.]");
 	  TMultiGraph *mgr=new TMultiGraph();
 	  TGraph* gr0=eff.Display("R4998");
 	  mgr->Add(gr0);
