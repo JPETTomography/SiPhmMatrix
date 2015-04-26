@@ -31,7 +31,8 @@ int main(int , char **arg){
 					hist->Fill(i+1);
 			}
 		double norm=double(3410.0)/double(emitted);
-		hist->Multiply(nullptr,norm);
+		TF1 func("One","1.0",0,11);
+		hist->Multiply(&func,norm);
 		hist->SetTitle("");
 		hist->GetXaxis()->SetTitle("Photomultiplier ID");
 		hist->GetYaxis()->SetTitle("Counts");
