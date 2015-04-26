@@ -64,7 +64,7 @@ int main(int , char **){
 			QTextStream str(&file);
 			PhotonDistribution distr(&scintillator,-0.01,203,0.0,40.0);
 			double x[]={z,0,0};
-			scintillator.RegisterLighting(x,100000);
+			scintillator.RegisterLighting(x,events_number*3000);
 			double norm=Sympson([&distr](double x){return distr.LeftDistr(x);},0.0,39.0,0.01);
 			auto Y=[&distr,norm](double x){return distr.LeftDistr(x)/norm;};
 			double integral=IntegralForResolution(Y,0.0,39.0,0.005);
