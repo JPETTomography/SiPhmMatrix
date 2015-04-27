@@ -28,7 +28,9 @@ void displaygraph(TMultiGraph *gr, uint n, double *x, QString *legend, double *x
 			TObjLink *obj=gr->GetListOfGraphs()->FirstLink();
 			uint i=0;
 			while(obj){
-				dynamic_cast<TGraph*>(obj->GetObject())->SetTitle(legend[i].toStdString().c_str());
+				TGraph * graph=dynamic_cast<TGraph*>(obj->GetObject());
+				graph->SetTitle(legend[i].toStdString().c_str());
+				graph->SetLineWidth(0);
 				obj=obj->Next();
 				i++;
 			}
