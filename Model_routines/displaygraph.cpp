@@ -16,14 +16,14 @@ void displaygraph(TMultiGraph *gr, uint n, double *x, QString *legend, double *x
 		fn+="_"+QString::fromStdString(alt_axis_name_2);
 	fn+=".png";
 	fn=fn.replace(" ","_");
-	DisplayObject_plus(fn.toStdString(),gr,"acp",[n,x,x_alt,alt_axis_name,x_alt_2,alt_axis_name_2,legend](TMultiGraph* gr){
+	DisplayObject_plusplus(fn.toStdString(),[](TCanvas*,TMultiGraph*){},gr,"acp",[n,x,x_alt,alt_axis_name,x_alt_2,alt_axis_name_2,legend](TCanvas* c,TMultiGraph* gr){
 		gr->GetYaxis()->SetTitle("#sigma [ns]");
 		gr->GetXaxis()->SetTitle("N");
 		gr->GetXaxis()->SetLabelSize(0.05);
 		gr->GetXaxis()->SetTitleSize(0.05);
 		gr->GetYaxis()->SetLabelSize(0.05);
 		gr->GetYaxis()->SetTitleSize(0.05);
-		gr->GetYaxis()->SetLabelOffset(1.3);
+		gr->GetYaxis()->SetTitleOffset(1.1);
 		if(legend!=NULL){
 			TObjLink *obj=gr->GetListOfGraphs()->FirstLink();
 			uint i=0;
@@ -45,6 +45,9 @@ void displaygraph(TMultiGraph *gr, uint n, double *x, QString *legend, double *x
 				alt_axis_2->SetTitle(alt_axis_name_2.c_str());
 				alt_axis_2->Draw();
 			}
+		}
+		if(legend!=NULL){
+			c->BuildLegend();
 		}
 	});
 }
