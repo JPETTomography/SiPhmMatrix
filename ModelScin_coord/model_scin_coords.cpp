@@ -20,17 +20,19 @@ int main(int , char **arg){
 	AbstractPhotoMultiplier *photomult=CreateSiliconPhotoMultiplier(scintillator);
 	{
 		MultRowColC cntphotons(photomult,ConstrParams(phm_x,phm_y,phm_dead));
-		X_lighting[1]=X_lighting[2]=0;
 		const uint photon_number=3410;
-		uint emitted=photon_number*events_number;
-		scintillator->RegisterLighting(X_lighting,emitted);
 		TH1F *hist=new TH1F("","",phm_x*phm_y+2,-0.5,double(phm_x*phm_y)+1.5);
-		for(int px=0;px<phm_x;px++)
-			for(int py=0;py<phm_y;py++){
-				int i=px*phm_y+py;
-				for(int c=0,cnt=cntphotons[px][py].LeftCount();c<cnt;c++)
-					hist->Fill(i+1);
-			}
+		for(uint ii=0;ii<events_number;ii++){
+			X_lighting[1]=RandomUniformly(-scin_hwx_si,scin_hwx_si);
+			X_lighting[2]=RandomUniformly(-scin_hwy_si,scin_hwy_si);
+			scintillator->RegisterLighting(X_lighting,photon_number);
+			for(int px=0;px<phm_x;px++)
+				for(int py=0;py<phm_y;py++){
+					int i=px*phm_y+py;
+					for(int c=0,cnt=cntphotons[px][py].LeftCount();c<cnt;c++)
+						hist->Fill(i+1);
+				}
+		}
 		double norm=1.0/double(events_number);
 		TF1 func("One","1.0",0,11);
 		hist->Multiply(&func,norm);

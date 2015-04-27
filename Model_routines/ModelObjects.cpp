@@ -25,14 +25,14 @@ FuncFromFile eff2(efficiencycurve2,0.01);
 #define params double,double,double,ScinLightingParamsTypes
 LongScintillator* CreateScintillatorEJ230(double length){
 	return new AbsorptionCoef<Scintillator3D_rect,decltype(absor2)*,3,params>
-			(&absor2,[](double w){return wl2(w);},wl2.Min(),wl2.Max(),0.01,length,scin_hwx,scin_hwy,scin_refr,lighting_params);
+		(&absor2,[](double w){return wl2(w);},wl2.Min(),wl2.Max(),0.01,length,scin_hwx,scin_hwy,scin_refr,lighting_params);
 }
 LongScintillator* CreateIdealScintillator(double length){
 	return new Scintillator3D_rect(length,scin_hwx,scin_hwy,scin_refr,lighting_params);
 }
 LongScintillator* CreateScintillatorBC420(double length){
 	return new AbsorptionCoef<Scintillator3D_rect,decltype(absor),3,params>
-			(absor,[](double w){return wl(w);},wl.Min(),wl.Max(),0.01,length,scin_hwx,scin_hwy,scin_refr,lighting_params);
+		(absor,[](double w){return wl(w);},wl.Min(),wl.Max(),0.01,length,scin_hwx,scin_hwy,scin_refr,lighting_params);
 }
 LongScintillator* CreateScintillatorBC420_4Si_matrix(double length){
 	return new AbsorptionCoef<Scintillator3D_rect,FuncFromFile,3,params>

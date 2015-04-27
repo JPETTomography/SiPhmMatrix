@@ -16,14 +16,14 @@ int main(int , char **arg){
 	for(uint k=0; k<3; k++)
 		sig_time_diff[k]=new double[nn];
 	double X_lighting[3];
-	for(int index_ph=20;index_ph<35; index_ph+=14){
+	for(int index_ph=27;index_ph<28; index_ph+=1){
 	for(int index=0; index<nn;index++ ){
 		uint N_photons=100*index_ph;
 		double length=lengths[index];X_lighting[0]=length/2;
-		LongScintillator *scin_ideal=CreateIdealScintillator(length);
-		LongScintillator *scin_ideal2=CreateIdealScintillator(length);
-		LongScintillator *scin_real=CreateScintillatorBC420(length);
-		LongScintillator *scin_real2=CreateScintillatorBC420(length);
+		LongScintillator *scin_ideal=CreateScintillatorBC420_4Si_matrix(length);
+		LongScintillator *scin_ideal2=CreateScintillatorBC420_4Si_matrix(length);
+		LongScintillator *scin_real=CreateScintillatorBC420_4Si_matrix(length);
+		LongScintillator *scin_real2=CreateScintillatorBC420_4Si_matrix(length);
 		AbstractPhotoMultiplier* phm_r=CreateTubePhotoMultiplier(scin_real);
 		AbstractPhotoMultiplier* phm_r2=CreateTubePhotoMultiplier(scin_real2);
 		LongScintillator *scin_si=CreateScintillatorBC420_4Si_matrix(length);
@@ -31,18 +31,16 @@ int main(int , char **arg){
 		AbstractPhotoMultiplier* phm_si=CreateSiliconPhotoMultiplier(scin_si);
 		AbstractPhotoMultiplier* phm_si2=CreateSiliconPhotoMultiplier(scin_si2);
 		Printf(QDateTime::currentDateTime().toString().toStdString().c_str());
-		Printf("Monte Carlo for L = %f  N = %i (%i virtual experiments)...", length,N_photons, events_number);
+		Printf("Monte Carlo for L = %f  N = %i (%i virtual experiments)...",length,N_photons,events_number);
 		FirstPhotonTimeRes first_ideal(scin_ideal,this_K);
 		FirstPhotonTimeRes first_real(phm_r,this_K);
 		SortFirst first_si(phm_si,FirstConstrPar(phm_x,phm_y,phm_dead));
 		for(uint cnt=0;cnt<events_number; cnt++){
 			if(0==((cnt+1)%1000))Printf("\texperiment number %i...",cnt+1);
-			X_lighting[1]=RandomUniformly(-scin_hwx,scin_hwx);
-			X_lighting[2]=RandomUniformly(-scin_hwy,scin_hwy);
-			scin_ideal->RegisterLighting(X_lighting,N_photons);
-			scin_real->RegisterLighting(X_lighting,N_photons);
 			X_lighting[1]=RandomUniformly(-scin_hwx_si,scin_hwx_si);
 			X_lighting[2]=RandomUniformly(-scin_hwy_si,scin_hwy_si);
+			scin_ideal->RegisterLighting(X_lighting,N_photons);
+			scin_real->RegisterLighting(X_lighting,N_photons);
 			scin_si->RegisterLighting(X_lighting,N_photons);
 		}
 		n_ph[index]=length;
@@ -68,16 +66,14 @@ int main(int , char **arg){
 				signal_si(phm_si2,w_s,s_si,phm_x*phm_y,FirstConstrPar(phm_x,phm_y,phm_dead));
 		for(uint cnt=0;cnt<events_number; cnt++){
 			if(0==((cnt+1)%1000))Printf("\texperiment number %i...",cnt+1);
-			X_lighting[1]=RandomUniformly(-scin_hwx,scin_hwx);
-			X_lighting[2]=RandomUniformly(-scin_hwy,scin_hwy);
-			scin_ideal2->RegisterLighting(X_lighting,N_photons);
-			scin_real2->RegisterLighting(X_lighting,N_photons);
 			X_lighting[1]=RandomUniformly(-scin_hwx_si,scin_hwx_si);
 			X_lighting[2]=RandomUniformly(-scin_hwy_si,scin_hwy_si);
+			scin_ideal2->RegisterLighting(X_lighting,N_photons);
+			scin_real2->RegisterLighting(X_lighting,N_photons);
 			scin_si2->RegisterLighting(X_lighting,N_photons);
 		}
 		sig_time_diff[0][index]=signal_ideal.ResolutionSignal();
-		sig_time_diff[1][index]=first_real.SigmaTimeDifference(0);
+		sig_time_diff[1][index]=(first_real.SigmaTimeDifference(0)+first_real.SigmaTimeDifference(2))/2.0;
 		sig_time_diff[2][index]=signal_si.ResolutionSignal();
 		delete phm_si;delete phm_si2;
 		delete scin_ideal;delete scin_ideal2;

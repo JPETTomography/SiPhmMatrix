@@ -22,15 +22,16 @@ void displaygraph(TMultiGraph *gr, uint n, double *x, double *x_alt, std::string
 		gr->GetXaxis()->SetTitleSize(0.05);
 		gr->GetYaxis()->SetLabelSize(0.05);
 		gr->GetYaxis()->SetTitleSize(0.05);
+		gr->GetYaxis()->SetLabelOffset(1.3);
 		if((n>0)&&(x_alt!=NULL)){
 			double y=gr->GetYaxis()->GetXmax();
-			TGaxis *alt_axis = new TGaxis(x[0],y,x[n-1],y,x_alt[0],x_alt[n-1]);
+			TGaxis *alt_axis = new TGaxis(gr->GetXaxis()->GetXmin(),y,gr->GetXaxis()->GetXmax(),y,x_alt[0],x_alt[n-1]);
 			alt_axis->SetTitle(alt_axis_name.c_str());
 			alt_axis->Draw();
 			if(x_alt_2!=NULL){
 				double y2=gr->GetYaxis()->GetXmin();
 				y2=y+(y2-y)*0.15;
-				TGaxis *alt_axis_2 = new TGaxis(x[0],y2,x[n-1],y2,x_alt_2[0],x_alt_2[n-1]);
+				TGaxis *alt_axis_2 = new TGaxis(gr->GetXaxis()->GetXmin(),y2,gr->GetXaxis()->GetXmax(),y2,x_alt_2[0],x_alt_2[n-1]);
 				alt_axis_2->SetTitle(alt_axis_name_2.c_str());
 				alt_axis_2->Draw();
 			}
