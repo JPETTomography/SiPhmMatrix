@@ -92,7 +92,7 @@ void DisplayPlots(){
 	  TMultiGraph *mgr=new TMultiGraph();
 	  TGraph* gr0=absor.Display("");
 	  mgr->Add(gr0);
-	  gr0->SetLineWidth(2);
+	  gr0->SetLineWidth(4);
 	  gr0->SetMarkerStyle(0);
 	  gr0->SetMarkerSize(0);
 	  DisplayObject_plusplus("absorbtion.png",[](TCanvas* c1,TMultiGraph* ){
@@ -130,12 +130,12 @@ void DisplayPlots(){
 	  TMultiGraph *mgr=new TMultiGraph();
 	  TGraph* gr0=eff.Display("R4998");
 	  mgr->Add(gr0);
-	  gr0->SetLineWidth(2);
+	  gr0->SetLineWidth(4);
 	  gr0->SetMarkerStyle(0);
 	  gr0->SetMarkerSize(0);
 	  TGraph* gr1=eff2.Display("Silicon");
 	  mgr->Add(gr1);
-	  gr1->SetLineWidth(2);
+	  gr1->SetLineWidth(4);
 	  gr1->SetLineStyle(kDashed);
 	  gr1->SetMarkerStyle(0);
 	  gr1->SetMarkerSize(0);
@@ -170,7 +170,7 @@ void DisplayWavelengthHist(TH1F *hist){
 		th1f->GetXaxis()->SetTitle("Wavelength [nm]");
 		th1f->GetYaxis()->SetTitle("Counts");
 		th1f->GetYaxis()->SetTitleOffset(1.5);
-		th1f->SetLineWidth(2);
+		th1f->SetLineWidth(4);
 		th1f->SetMarkerStyle(0);
 		th1f->SetMarkerSize(0);
 	},new TGraph(hist),"LP",[](TCanvas*,TGraph*){

@@ -8,6 +8,7 @@
 #include <TMultiGraph.h>
 #include <LongScintillator/scintillator.h>
 void displaygraph(TMultiGraph* gr, uint n, double* x
+				, QString *legend=NULL
 				, double* x_alt=NULL, std::string alt_axis_name=""
 				, double* x_alt_2=NULL, std::string alt_axis_name_2=""
 		);

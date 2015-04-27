@@ -64,7 +64,13 @@ int main(int , char **arg){
 	}
 
 	Printf("CALCULATION FINISHED. DISPLAYING RESULTS");
-	displaygraph(MakeGraph(ukl_k,n,n_ph,sig_time_diff,"diffgr",""),n,n_ph,NULL,"_additional");
+	QString legend[ukl_k];
+	for(uint i=0;i<ukl_k;i++){
+		legend[i]=QString::number(uklad[i*2])+"x"+QString::number(uklad[i*2+1]);
+		if(uklad_dead[i]>0)
+			legend[i]+="(with dead area)";
+	}
+	displaygraph(MakeGraph(ukl_k,n,n_ph,sig_time_diff,"diffgr",""),n,n_ph,legend,NULL,"_additional");
 	Printf("SAVING FILE");
 	QString name(arg[0]);
 	QFile file(name+".output.txt");

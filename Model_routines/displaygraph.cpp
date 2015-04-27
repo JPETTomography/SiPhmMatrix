@@ -1,11 +1,12 @@
 #include <TFrame.h>
+#include <TList.h>
 #include <QApplication>
 #include <QDir>
 #include <TGaxis.h>
 #include "displaygraph.h"
 #include <Model_routines/display_root_object.h>
 int file_no=0;
-void displaygraph(TMultiGraph *gr, uint n, double *x, double *x_alt, std::string alt_axis_name, double *x_alt_2, std::string alt_axis_name_2){
+void displaygraph(TMultiGraph *gr, uint n, double *x, QString *legend, double *x_alt, std::string alt_axis_name, double *x_alt_2, std::string alt_axis_name_2){
 	file_no++;
 	QString fn="Graph_";
 	fn+=QString::number(file_no);
@@ -15,7 +16,7 @@ void displaygraph(TMultiGraph *gr, uint n, double *x, double *x_alt, std::string
 		fn+="_"+QString::fromStdString(alt_axis_name_2);
 	fn+=".png";
 	fn=fn.replace(" ","_");
-	DisplayObject_plus(fn.toStdString(),gr,"acp",[n,x,x_alt,alt_axis_name,x_alt_2,alt_axis_name_2](TMultiGraph* gr){
+	DisplayObject_plus(fn.toStdString(),gr,"acp",[n,x,x_alt,alt_axis_name,x_alt_2,alt_axis_name_2,legend](TMultiGraph* gr){
 		gr->GetYaxis()->SetTitle("#sigma [ns]");
 		gr->GetXaxis()->SetTitle("N");
 		gr->GetXaxis()->SetLabelSize(0.05);
@@ -23,6 +24,15 @@ void displaygraph(TMultiGraph *gr, uint n, double *x, double *x_alt, std::string
 		gr->GetYaxis()->SetLabelSize(0.05);
 		gr->GetYaxis()->SetTitleSize(0.05);
 		gr->GetYaxis()->SetLabelOffset(1.3);
+		if(legend!=NULL){
+			TObjLink *obj=gr->GetListOfGraphs()->FirstLink();
+			uint i=0;
+			while(obj){
+				dynamic_cast<TGraph*>(obj->GetObject())->SetTitle(legend[i].toStdString().c_str());
+				obj=obj->Next();
+				i++;
+			}
+		}
 		if((n>0)&&(x_alt!=NULL)){
 			double y=gr->GetYaxis()->GetXmax();
 			TGaxis *alt_axis = new TGaxis(gr->GetXaxis()->GetXmin(),y,gr->GetXaxis()->GetXmax(),y,x_alt[0],x_alt[n-1]);
