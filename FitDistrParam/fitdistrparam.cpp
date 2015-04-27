@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <fstream>
 #include <memory>
 #include <fit.h>
 #include <initialconditions.h>
@@ -22,7 +23,7 @@ double distr_old(double x, double sigma,double decay){
 int main(int , char **){
 	double sigma_old=0.20;
 	double decay_old=1.50;
-	double new_rise_t=0.005;
+	double new_rise_t=0.01;
 	SingleParam<double,0,double,double,double> A(distr_old,INFINITY,sigma_old,decay_old);
 	auto points=make_shared<FitPoints>();
 	for(double x=0; x<=10; x+=0.2)
@@ -38,5 +39,28 @@ int main(int , char **){
 	while(!fit.ConcentratedInOnePoint())
 		fit.Iterate();
 	printf("DEFINES+=lighting_params=%f,%f,%f\n",new_rise_t,fit[0],fit[1]);
+	{
+		ofstream file;
+		file.open("emission.txt");
+		if(file.is_open()){
+			for(double x=-1;x<=20;x+=0.01)
+				file<<x<<"\t"<<A(x)<<"\t"<<fit(ParamSet(x))<<"\n";
+		}
+	}
+	{string script=".plotscript.gp";
+				ofstream str;
+				str.open(script.c_str());
+				if(str.is_open()){
+						str<<"set terminal pngcairo size 800,600 enhanced monochrome font 'Verdana,18'\n";
+						str<<"set output 'emission_time_distribution.png'\n";
+						str<<"set xlabel 'Time [ns]'\n";
+						str << "plot ";
+						str <<"\"emission.txt\" using 1:2 w l ls 1 title \"Old distribution\"";
+						str << ",\\\n";
+						str <<"\"emission.txt\" using 1:3 w l ls 1 title \"New distribution\"";
+						str.close();
+				}
+				system((string("gnuplot ")+script).c_str());
+		}
 	return 0;
 }
