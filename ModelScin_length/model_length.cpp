@@ -11,9 +11,9 @@
 #include <LongScintillator/photoncounters.h>
 #include <LongScintillator/math_h/randomfunc.h>
 double lengths[]={test_L};
-Width_t widths[]={2,2,1,1};
+Width_t widths[]={4,4,2,1};
 EColor colors[]={kBlack,kBlack,kBlack,kBlack};
-ELineStyle styles[]={kSolid,kDashed,kSolid,kDotted};
+ELineStyle styles[]={kSolid,kDotted,kSolid,kDotted};
 int main(int , char **arg){
 	Printf(arg[0]);
 	Printf(QDateTime::currentDateTime().toString().toStdString().c_str());
