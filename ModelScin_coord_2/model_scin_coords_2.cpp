@@ -28,8 +28,8 @@ int main(int , char **arg){
 				new	SortFirst(photomult,FirstConstrPar(uklad[k*2],uklad[k*2+1],uklad_dead[k]));
 		for(uint cnt=0;cnt<events_number; cnt++){
 			if(0==((cnt+1)%1000))Printf("\texperiment number %i...",cnt+1);
-			X_lighting[1]=RandomUniformly(-scin_hwx_si,scin_hwx_si);
-			X_lighting[2]=RandomUniformly(-scin_hwy_si,scin_hwy_si);
+			X_lighting[1]=RandomUniformlyR(-scin_hwx_si,scin_hwx_si);
+			X_lighting[2]=RandomUniformlyR(-scin_hwy_si,scin_hwy_si);
 			scintillator->RegisterLighting(X_lighting,N_photons);
 		}
 		n_ph[index]=N_photons;
@@ -51,8 +51,8 @@ int main(int , char **arg){
 					);
 		for(uint cnt=0;cnt<events_number; cnt++){
 			if(0==((cnt+1)%1000))Printf("\texperiment number %i...",cnt+1);
-			X_lighting[1]=RandomUniformly(-scin_hwx_si,scin_hwx_si);
-			X_lighting[2]=RandomUniformly(-scin_hwy_si,scin_hwy_si);
+			X_lighting[1]=RandomUniformlyR(-scin_hwx_si,scin_hwx_si);
+			X_lighting[2]=RandomUniformlyR(-scin_hwy_si,scin_hwy_si);
 			scintillator2->RegisterLighting(X_lighting,N_photons);
 		}
 		for(uint k=0;k<ukl_k;k++){

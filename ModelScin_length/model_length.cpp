@@ -28,8 +28,8 @@ int main(int , char **arg){
 		timehist.StartHist("",400,0,20);
 		for(uint cnt=0; cnt<events_number;cnt++){
 			if(0==((cnt+1)%1000))Printf("\texperiment number %i...",cnt+1);
-			coords[1]=RandomUniformly(-scin_hwx,scin_hwx);
-			coords[2]=RandomUniformly(-scin_hwy,scin_hwy);
+			coords[1]=RandomUniformlyR(-scin_hwx,scin_hwx);
+			coords[2]=RandomUniformlyR(-scin_hwy,scin_hwy);
 			scintillator.RegisterLighting(coords,n_widm);
 		}
 		double m=timehist.getHist(false)->GetMaximum();if(m>max)max=m;

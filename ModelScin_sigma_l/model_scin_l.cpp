@@ -37,8 +37,8 @@ int main(int , char **arg){
 		SortFirst first_si(phm_si,FirstConstrPar(phm_x,phm_y,phm_dead));
 		for(uint cnt=0;cnt<events_number; cnt++){
 			if(0==((cnt+1)%1000))Printf("\texperiment number %i...",cnt+1);
-			X_lighting[1]=RandomUniformly(-scin_hwx_si,scin_hwx_si);
-			X_lighting[2]=RandomUniformly(-scin_hwy_si,scin_hwy_si);
+			X_lighting[1]=RandomUniformlyR(-scin_hwx_si,scin_hwx_si);
+			X_lighting[2]=RandomUniformlyR(-scin_hwy_si,scin_hwy_si);
 			scin_ideal->RegisterLighting(X_lighting,N_photons);
 			scin_real->RegisterLighting(X_lighting,N_photons);
 			scin_si->RegisterLighting(X_lighting,N_photons);
@@ -66,8 +66,8 @@ int main(int , char **arg){
 				signal_si(phm_si2,w_s,s_si,phm_x*phm_y,FirstConstrPar(phm_x,phm_y,phm_dead));
 		for(uint cnt=0;cnt<events_number; cnt++){
 			if(0==((cnt+1)%1000))Printf("\texperiment number %i...",cnt+1);
-			X_lighting[1]=RandomUniformly(-scin_hwx_si,scin_hwx_si);
-			X_lighting[2]=RandomUniformly(-scin_hwy_si,scin_hwy_si);
+			X_lighting[1]=RandomUniformlyR(-scin_hwx_si,scin_hwx_si);
+			X_lighting[2]=RandomUniformlyR(-scin_hwy_si,scin_hwy_si);
 			scin_ideal2->RegisterLighting(X_lighting,N_photons);
 			scin_real2->RegisterLighting(X_lighting,N_photons);
 			scin_si2->RegisterLighting(X_lighting,N_photons);

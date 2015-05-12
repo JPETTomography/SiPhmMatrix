@@ -23,8 +23,8 @@ int main(int , char **arg){
 		const uint photon_number=3410;
 		TH1F *hist=new TH1F("","",phm_x*phm_y+2,-0.5,double(phm_x*phm_y)+1.5);
 		for(uint ii=0;ii<events_number;ii++){
-			X_lighting[1]=RandomUniformly(-scin_hwx_si,scin_hwx_si);
-			X_lighting[2]=RandomUniformly(-scin_hwy_si,scin_hwy_si);
+			X_lighting[1]=RandomUniformlyR(-scin_hwx_si,scin_hwx_si);
+			X_lighting[2]=RandomUniformlyR(-scin_hwy_si,scin_hwy_si);
 			scintillator->RegisterLighting(X_lighting,photon_number);
 			for(int px=0;px<phm_x;px++)
 				for(int py=0;py<phm_y;py++){
@@ -56,8 +56,8 @@ int main(int , char **arg){
 		SortCnt cntphotons(photomult,CntConstrPar(phm_x,phm_y,phm_dead));
 		for(uint cnt=0;cnt<events_number; cnt++){
 			if(0==((cnt+1)%1000))Printf("\texperiment number %i...",cnt+1);
-			X_lighting[1]=RandomUniformly(-scin_hwx_si,scin_hwx_si);
-			X_lighting[2]=RandomUniformly(-scin_hwy_si,scin_hwy_si);
+			X_lighting[1]=RandomUniformlyR(-scin_hwx_si,scin_hwx_si);
+			X_lighting[2]=RandomUniformlyR(-scin_hwy_si,scin_hwy_si);
 			scintillator->RegisterLighting(X_lighting,N_photons);
 		}
 		n_ph[index]=N_photons;
@@ -80,8 +80,8 @@ int main(int , char **arg){
 				signal_diff(photomult2,w_d,s_d,n_phm,FirstConstrPar(phm_x,phm_y,phm_dead));
 		for(uint cnt=0;cnt<events_number; cnt++){
 			if(0==((cnt+1)%1000))Printf("\texperiment number %i...",cnt+1);
-			X_lighting[1]=RandomUniformly(-scin_hwx_si,scin_hwx_si);
-			X_lighting[2]=RandomUniformly(-scin_hwy_si,scin_hwy_si);
+			X_lighting[1]=RandomUniformlyR(-scin_hwx_si,scin_hwx_si);
+			X_lighting[2]=RandomUniformlyR(-scin_hwy_si,scin_hwy_si);
 			scintillator2->RegisterLighting(X_lighting,N_photons);
 		}
 		sig_time_diff[K][index]=signal_diff.ResolutionSignal();

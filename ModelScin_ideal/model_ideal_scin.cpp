@@ -27,8 +27,8 @@ int main(int , char **arg){
 		FirstPhotonTimeRes first_photons(scintillator,this_K_);
 		for(uint cnt=0;cnt<events_number; cnt++){
 			if(0==((cnt+1)%1000))Printf("\texperiment number %i...",cnt+1);
-			X_lighting[1]=RandomUniformly(-scin_hwx,scin_hwx);
-			X_lighting[2]=RandomUniformly(-scin_hwy,scin_hwy);
+			X_lighting[1]=RandomUniformlyR(-scin_hwx,scin_hwx);
+			X_lighting[2]=RandomUniformlyR(-scin_hwy,scin_hwy);
 			scintillator->RegisterLighting(X_lighting,N_photons);
 		}
 		n_ph[index]=N_photons;
@@ -73,8 +73,8 @@ int main(int , char **arg){
 		}
 		for(uint cnt=0;cnt<events_number; cnt++){
 			if(0==((cnt+1)%1000))Printf("\texperiment number %i...",cnt+1);
-			X_lighting[1]=RandomUniformly(-scin_hwx,scin_hwx);
-			X_lighting[2]=RandomUniformly(-scin_hwy,scin_hwy);
+			X_lighting[1]=RandomUniformlyR(-scin_hwx,scin_hwx);
+			X_lighting[2]=RandomUniformlyR(-scin_hwy,scin_hwy);
 			scintillator2->RegisterLighting(X_lighting,N_photons);
 			if(0==N_photons%1000){
 				for(uint k=0; k<K; k++)

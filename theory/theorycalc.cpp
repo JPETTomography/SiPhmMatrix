@@ -22,8 +22,7 @@ private:
 public:
 		TheorResolutionCalc(LongScintillator* scin):ScintillatorDebug(scin){
 				double dx=0.001;double beg=0.0;double end=40.0;
-				FuncTable<double> y(int((end-beg)/dx)+2);
-				fillFuncTable(y,beg-dx,end,[this](double x){return LightingTimeDistr(x);});
+				LinearInterpolation_fixedsize<double> y([this](double x){return LightingTimeDistr(x);},beg-dx,end,int((end-beg)/dx)+2);
 				integral=IntegralForResolution(y,beg,end,dx);
 		}
 		double MinimalLightingSigma(uint N){return 1.0/(integral*N);}

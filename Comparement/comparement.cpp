@@ -20,8 +20,8 @@ int main(int , char **arg){
 		PhotonCounter counter(photomult);
 		for(uint cnt=0;cnt<events_number; cnt++){
 			if(0==((cnt+1)%1000))Printf("\texperiment number %i...",cnt+1);
-			X_lighting[1]=RandomUniformly(-scin_hwx,scin_hwx);
-			X_lighting[2]=RandomUniformly(-scin_hwy,scin_hwy);
+			X_lighting[1]=RandomUniformlyR(-scin_hwx,scin_hwx);
+			X_lighting[2]=RandomUniformlyR(-scin_hwy,scin_hwy);
 			scintillator->RegisterLighting(X_lighting,3492);
 		}
 		Length[i]=X_lighting[0];
