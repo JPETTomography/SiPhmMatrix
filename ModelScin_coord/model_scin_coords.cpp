@@ -7,6 +7,7 @@
 #include <Model_routines/ModelObjects.h>
 #include <Model_routines/display_root_object.h>
 #include <LongScintillator/math_h/randomfunc.h>
+#include <LongScintillator/math_h/sigma.h>
 const uint n_phm=phm_x*phm_y;
 int main(int , char **arg){
 	Printf(arg[0]);
@@ -47,11 +48,11 @@ int main(int , char **arg){
 				str<<"set terminal pngcairo size 800,600 enhanced monochrome font 'Verdana,20'\n";
 				str<<"set output 'Photon_number_distribution.png'\n";
 				str<<"set xlabel 'Photomultiplier index'\n";
-				str<<"set ylabel 'Average registered photons count'\n";
+				str<<"set ylabel 'Registered photons count'\n";
 				str<<"set xrange [0:"<<phm_x*phm_y+1<<"]\n";
 				str<<"set yrange [0:"<<ymax<<"]\n";
 				str <<"plot ";
-				str <<"\"average.per.phm.output.txt\" with yerror title \"emission\"";
+				str <<"\"average.per.phm.output.txt\" with yerror title ''";
 				str<<"\n";
 				file.close();
 			}
@@ -66,7 +67,7 @@ int main(int , char **arg){
 		Printf(QDateTime::currentDateTime().toString().toStdString().c_str());
 		Printf("Monte Carlo for N = %i (%i virtual experiments)...",N_photons, events_number);
 		SortFirst first_phm(photomult,FirstConstrPar(phm_x,phm_y,phm_dead));
-		SortCnt cntphotons(photomult,CntConstrPar(phm_x,phm_y,phm_dead));
+		MultRowColC cnt_photons(photomult,ConstrParams(phm_x,phm_y,phm_dead));
 		for(uint cnt=0;cnt<events_number; cnt++){
 			if(0==((cnt+1)%1000))Printf("\texperiment number %i...",cnt+1);
 			X_lighting[1]=RandomUniformlyR(-scin_hwx_si,scin_hwx_si);
@@ -74,8 +75,16 @@ int main(int , char **arg){
 			scintillator->RegisterLighting(X_lighting,N_photons);
 		}
 		n_ph[index]=N_photons;
-		n_ph_small[index]=cntphotons.getAverage(n_phm/2);
-		n_ph_big[index]=n_ph_small[index]*phm_x*phm_y*2;
+		WeightedAverageCalculator<double> Small;
+		double Big=0;
+		for(int px=0;px<phm_x;px++)for(int py=0;py<phm_y;py++){
+			auto Phm=&(cnt_photons[px][py]);
+			Small.AddValue(Phm->LeftAverage(),Phm->LeftSigma())
+					.AddValue(Phm->LeftAverage(),Phm->LeftSigma());
+			Big+=Phm->LeftAverage()+Phm->RightAverage();
+		}
+		n_ph_small[index]=Small.Average();
+		n_ph_big[index]=Big;
 		for(uint k=0; k<K;k++){
 			sig_time_diff[k][index]=first_phm.getSigma(k);
 			Printf("Sigma[%i][%i] = %f",k,index,sig_time_diff[k][index]);
