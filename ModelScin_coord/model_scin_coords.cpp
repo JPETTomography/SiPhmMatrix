@@ -1,6 +1,7 @@
 #include <QDateTime>
 #include <QFile>
 #include <QTextStream>
+#include <QProcess>
 #include <Model_routines/displaygraph.h>
 #include <Model_routines/funcfromfile.h>
 #include <Model_routines/ModelObjects.h>
@@ -21,30 +22,36 @@ int main(int , char **arg){
 	{
 		MultRowColC cntphotons(photomult,ConstrParams(phm_x,phm_y,phm_dead));
 		const uint photon_number=3410;
-		TH1F *hist=new TH1F("","",phm_x*phm_y+2,-0.5,double(phm_x*phm_y)+1.5);
 		for(uint ii=0;ii<events_number;ii++){
 			X_lighting[1]=RandomUniformlyR(-scin_hwx_si,scin_hwx_si);
 			X_lighting[2]=RandomUniformlyR(-scin_hwy_si,scin_hwy_si);
 			scintillator->RegisterLighting(X_lighting,photon_number);
-			for(int px=0;px<phm_x;px++)
-				for(int py=0;py<phm_y;py++){
-					int i=px*phm_y+py;
-					for(int c=0,cnt=cntphotons[px][py].LeftCount();c<cnt;c++)
-						hist->Fill(i+1);
-				}
 		}
-		double norm=1.0/double(events_number);
-		TF1 func("One","1.0",0,11);
-		hist->Multiply(&func,norm);
-		hist->SetTitle("");
-		hist->GetXaxis()->SetTitle("Photomultiplier ID");
-		hist->GetYaxis()->SetTitle("Counts");
-		hist->SetStats(0);
-		hist->GetXaxis()->SetLabelSize(0.05);
-		hist->GetYaxis()->SetLabelSize(0.04);
-		hist->GetXaxis()->SetTitleSize(0.05);
-		hist->GetYaxis()->SetTitleSize(0.05);
-		DisplayObject("Photon_number_distribution.png",hist,"");
+		QFile file("average.per.phm.output.txt");
+		file.open(QIODevice::WriteOnly);
+		if(file.isOpen()){
+			QTextStream str(&file);
+			for(int px=0;px<phm_x;px++)for(int py=0;py<phm_y;py++)
+					str<<px*phm_y+py<<"\t"<<cntphotons[px][py].LeftAverage()<<"\t"<<cntphotons[px][py].LeftSigma()<<"\n";
+			file.close();
+		}
+		{QString script="Photon_number_distribution.gnuplot";
+			QFile file(script);
+			file.open(QFile::WriteOnly);
+			if(file.isOpen()){
+				QTextStream str(&file);
+				str<<"set terminal pngcairo size 800,600 enhanced monochrome font 'Verdana,20'\n";
+				str<<"set output 'Photon_number_distribution.png'\n";
+				str<<"set xlabel 'Photomultiplier index'\n";
+				str<<"set ylabel 'Average registered photons count'\n";
+				str <<"plot ";
+				str <<"\"average.per.phm.output.txt\" with yerror title \"emission\"";
+				str<<"\n";
+				file.close();
+			}
+			QProcess *gnuplot=new QProcess();
+			gnuplot->startDetached("gnuplot",QStringList()<<script);
+		}
 	}
 	LongScintillator *scintillator2=CreateScintillatorBC420_4Si_matrix();
 	AbstractPhotoMultiplier *photomult2=CreateSiliconPhotoMultiplier(scintillator2);
