@@ -34,9 +34,9 @@ int main(int , char **arg){
 		if(file.isOpen()){
 			QTextStream str(&file);
 			for(int px=0;px<phm_x;px++)for(int py=0;py<phm_y;py++){
-					str<<px*phm_y+py+1<<"\t"<<cntphotons[px][py].LeftAverage()<<"\t"<<cntphotons[px][py].LeftSigma()<<"\n";
-					double max=cntphotons[px][py].LeftAverage()+2.0*cntphotons[px][py].LeftSigma();
-					if(max>ymax)ymax=max;
+				str<<px*phm_y+py+1<<"\t"<<cntphotons[px][py].LeftAverage()<<"\t"<<cntphotons[px][py].LeftSigma()<<"\n";
+				double max=cntphotons[px][py].LeftAverage()+2.0*cntphotons[px][py].LeftSigma();
+				if(max>ymax)ymax=max;
 			}
 			file.close();
 		}
@@ -51,8 +51,9 @@ int main(int , char **arg){
 				str<<"set ylabel 'Registered photons count'\n";
 				str<<"set xrange [0:"<<phm_x*phm_y+1<<"]\n";
 				str<<"set yrange [0:"<<ymax<<"]\n";
+				str<<"set pointsize 3 \n";
 				str <<"plot ";
-				str <<"\"average.per.phm.output.txt\" with yerror title ''";
+				str <<"\"average.per.phm.output.txt\" with points title ''";
 				str<<"\n";
 				file.close();
 			}
