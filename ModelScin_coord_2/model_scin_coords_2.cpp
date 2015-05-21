@@ -9,6 +9,8 @@
 uint uklad[]={ukl_arr};
 double uklad_dead[]={ukl_dead};
 int main(int , char **arg){
+	std::default_random_engine G;
+	std::uniform_real_distribution<double> posx(-scin_hwx_si,scin_hwx_si),posy(-scin_hwy_si,scin_hwy_si);
 	Printf(arg[0]);
 	Printf(QDateTime::currentDateTime().toString().toStdString().c_str());
 	double X_lighting[3];X_lighting[0]=scin_z;
@@ -28,8 +30,7 @@ int main(int , char **arg){
 				new	SortFirst(photomult,FirstConstrPar(uklad[k*2],uklad[k*2+1],uklad_dead[k]));
 		for(uint cnt=0;cnt<events_number; cnt++){
 			if(0==((cnt+1)%1000))Printf("\texperiment number %i...",cnt+1);
-			X_lighting[1]=RandomUniformlyR(-scin_hwx_si,scin_hwx_si);
-			X_lighting[2]=RandomUniformlyR(-scin_hwy_si,scin_hwy_si);
+			X_lighting[1]=posx(G);X_lighting[2]=posy(G);
 			scintillator->RegisterLighting(X_lighting,N_photons);
 		}
 		n_ph[index]=N_photons;
@@ -51,8 +52,7 @@ int main(int , char **arg){
 					);
 		for(uint cnt=0;cnt<events_number; cnt++){
 			if(0==((cnt+1)%1000))Printf("\texperiment number %i...",cnt+1);
-			X_lighting[1]=RandomUniformlyR(-scin_hwx_si,scin_hwx_si);
-			X_lighting[2]=RandomUniformlyR(-scin_hwy_si,scin_hwy_si);
+			X_lighting[1]=posx(G);X_lighting[2]=posy(G);
 			scintillator2->RegisterLighting(X_lighting,N_photons);
 		}
 		for(uint k=0;k<ukl_k;k++){

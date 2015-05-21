@@ -6,9 +6,10 @@
 #include <Model_routines/ModelObjects.h>
 #include <LongScintillator/photoncounters.h>
 #include <LongScintillator/scintillator_templates.h>
-#include <LongScintillator/math_h/randomfunc.h>
 #include <LongScintillator/math_h/interpolate.h>
 int main(int , char **arg){
+	std::default_random_engine G;
+	std::uniform_real_distribution<double> posx(-scin_hwx,scin_hwx),posy(-scin_hwy,scin_hwy);
 	Printf(arg[0]);
 	Printf(QDateTime::currentDateTime().toString().toStdString().c_str());
 	double n_ph[n];
@@ -34,8 +35,7 @@ int main(int , char **arg){
 		FirstPhotonTimeRes first_photons(photomult,this_K);
 		for(uint cnt=0;cnt<events_number; cnt++){
 			if(0==((cnt+1)%1000))Printf("\texperiment number %i...",cnt+1);
-			X_lighting[1]=RandomUniformlyR(-scin_hwx,scin_hwx);
-			X_lighting[2]=RandomUniformlyR(-scin_hwy,scin_hwy);
+			X_lighting[1]=posx(G);X_lighting[2]=posy(G);
 			scintillator->RegisterLighting(X_lighting,N_photons);
 		}
 		n_ph[index]=N_photons;
@@ -61,8 +61,7 @@ int main(int , char **arg){
 				signal_diff(photomult2,w_d,s_d,this_K,this_K);
 		for(uint cnt=0;cnt<events_number; cnt++){
 			if(0==((cnt+1)%1000))Printf("\texperiment number %i...",cnt+1);
-			X_lighting[1]=RandomUniformlyR(-scin_hwx,scin_hwx);
-			X_lighting[2]=RandomUniformlyR(-scin_hwy,scin_hwy);
+			X_lighting[1]=posx(G);X_lighting[2]=posy(G);
 			scintillator2->RegisterLighting(X_lighting,N_photons);
 		}
 		sig_time_diff[K][index]=signal_diff.ResolutionSignal();

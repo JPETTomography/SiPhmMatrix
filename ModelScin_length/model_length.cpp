@@ -15,6 +15,8 @@ Width_t widths[]={4,4,2,1};
 EColor colors[]={kBlack,kBlack,kBlack,kBlack};
 ELineStyle styles[]={kSolid,kDotted,kSolid,kDotted};
 int main(int , char **arg){
+	std::default_random_engine G;
+	std::uniform_real_distribution<double> posx(-scin_hwx,scin_hwx),posy(-scin_hwy,scin_hwy);
 	Printf(arg[0]);
 	Printf(QDateTime::currentDateTime().toString().toStdString().c_str());
 	Scintillator3D_rect scintillator(lengths[test_L_k-1]+50,scin_hwx,scin_hwy,scin_refr,lighting_params);
@@ -28,8 +30,7 @@ int main(int , char **arg){
 		timehist.StartHist("",400,0,20);
 		for(uint cnt=0; cnt<events_number;cnt++){
 			if(0==((cnt+1)%1000))Printf("\texperiment number %i...",cnt+1);
-			coords[1]=RandomUniformlyR(-scin_hwx,scin_hwx);
-			coords[2]=RandomUniformlyR(-scin_hwy,scin_hwy);
+			coords[1]=posx(G);	coords[2]=posy(G);
 			scintillator.RegisterLighting(coords,n_widm);
 		}
 		double m=timehist.getHist(false)->GetMaximum();if(m>max)max=m;

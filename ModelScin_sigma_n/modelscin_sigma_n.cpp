@@ -1,3 +1,4 @@
+#include <random>
 #include <QDateTime>
 #include <TGraph.h>
 #include <TH1F.h>
@@ -8,8 +9,9 @@
 #include <Model_routines/ModelObjects.h>
 #include <LongScintillator/scintillator_templates.h>
 #include <LongScintillator/photoncounters.h>
-#include <LongScintillator/math_h/randomfunc.h>
 int main(int , char **arg){
+	std::default_random_engine G;
+	std::uniform_real_distribution<double> posx(-scin_hwx,scin_hwx),posy(-scin_hwy,scin_hwy);
 	Printf(arg[0]);
 	Printf(QDateTime::currentDateTime().toString().toStdString().c_str());
 	double X_lighting[3];X_lighting[0]=scin_z;
@@ -25,8 +27,7 @@ int main(int , char **arg){
 	FirstPhotonTimeRes first_photons(photomult,this_K);
 	for(uint cnt=0;cnt<events_number; cnt++){
 		if(0==((cnt+1)%1000))Printf("\texperiment number %i...",cnt+1);
-		X_lighting[1]=RandomUniformlyR(-scin_hwx,scin_hwx);
-		X_lighting[2]=RandomUniformlyR(-scin_hwy,scin_hwy);
+		X_lighting[1]=posx(G);X_lighting[2]=posy(G);
 		scintillator->RegisterLighting(X_lighting,n_widm);
 	}
 	for(uint k=0; k<this_K;k++){

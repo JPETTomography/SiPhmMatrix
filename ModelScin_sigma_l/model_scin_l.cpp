@@ -1,3 +1,4 @@
+#include <random>
 #include <QDateTime>
 #include <Model_routines/displaygraph.h>
 #include <Model_routines/display_root_object.h>
@@ -5,10 +6,11 @@
 #include <Model_routines/ModelObjects.h>
 #include <LongScintillator/photoncounters.h>
 #include <LongScintillator/scintillator_templates.h>
-#include <LongScintillator/math_h/randomfunc.h>
 int nn=10;
 double lengths[]={30, 50, 75, 100, 150, 200, 300, 400, 500, 1000};
 int main(int , char **arg){
+	std::default_random_engine G;
+	std::uniform_real_distribution<double> posx(-scin_hwx_si,scin_hwx_si),posy(-scin_hwy_si,scin_hwy_si);
 	Printf(arg[0]);
 	Printf(QDateTime::currentDateTime().toString().toStdString().c_str());
 	double n_ph[nn];
@@ -37,8 +39,7 @@ int main(int , char **arg){
 		SortFirst first_si(phm_si,FirstConstrPar(phm_x,phm_y,phm_dead));
 		for(uint cnt=0;cnt<events_number; cnt++){
 			if(0==((cnt+1)%1000))Printf("\texperiment number %i...",cnt+1);
-			X_lighting[1]=RandomUniformlyR(-scin_hwx_si,scin_hwx_si);
-			X_lighting[2]=RandomUniformlyR(-scin_hwy_si,scin_hwy_si);
+			X_lighting[1]=posx(G);X_lighting[2]=posy(G);
 			scin_ideal->RegisterLighting(X_lighting,N_photons);
 			scin_real->RegisterLighting(X_lighting,N_photons);
 			scin_si->RegisterLighting(X_lighting,N_photons);
@@ -66,8 +67,7 @@ int main(int , char **arg){
 				signal_si(phm_si2,w_s,s_si,phm_x*phm_y,FirstConstrPar(phm_x,phm_y,phm_dead));
 		for(uint cnt=0;cnt<events_number; cnt++){
 			if(0==((cnt+1)%1000))Printf("\texperiment number %i...",cnt+1);
-			X_lighting[1]=RandomUniformlyR(-scin_hwx_si,scin_hwx_si);
-			X_lighting[2]=RandomUniformlyR(-scin_hwy_si,scin_hwy_si);
+			X_lighting[1]=posx(G);X_lighting[2]=posy(G);
 			scin_ideal2->RegisterLighting(X_lighting,N_photons);
 			scin_real2->RegisterLighting(X_lighting,N_photons);
 			scin_si2->RegisterLighting(X_lighting,N_photons);

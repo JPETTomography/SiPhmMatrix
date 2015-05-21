@@ -6,10 +6,11 @@
 #include <Model_routines/funcfromfile.h>
 #include <Model_routines/ModelObjects.h>
 #include <Model_routines/display_root_object.h>
-#include <LongScintillator/math_h/randomfunc.h>
 #include <LongScintillator/math_h/sigma.h>
 const uint n_phm=phm_x*phm_y;
 int main(int , char **arg){
+	std::default_random_engine G;
+	std::uniform_real_distribution<double> posx(-scin_hwx_si,scin_hwx_si),posy(-scin_hwy_si,scin_hwy_si);
 	Printf(arg[0]);
 	Printf(QDateTime::currentDateTime().toString().toStdString().c_str());
 	double X_lighting[3];X_lighting[0]=scin_z;
@@ -24,8 +25,7 @@ int main(int , char **arg){
 		MultRowColC cntphotons(photomult,ConstrParams(phm_x,phm_y,phm_dead));
 		const uint photon_number=3410;
 		for(uint ii=0;ii<events_number;ii++){
-			X_lighting[1]=RandomUniformlyR(-scin_hwx_si,scin_hwx_si);
-			X_lighting[2]=RandomUniformlyR(-scin_hwy_si,scin_hwy_si);
+			X_lighting[1]=posx(G);X_lighting[2]=posy(G);
 			scintillator->RegisterLighting(X_lighting,photon_number);
 		}
 		QFile file("average.per.phm.output.txt");
@@ -71,8 +71,7 @@ int main(int , char **arg){
 		MultRowColC cnt_photons(photomult,ConstrParams(phm_x,phm_y,phm_dead));
 		for(uint cnt=0;cnt<events_number; cnt++){
 			if(0==((cnt+1)%1000))Printf("\texperiment number %i...",cnt+1);
-			X_lighting[1]=RandomUniformlyR(-scin_hwx_si,scin_hwx_si);
-			X_lighting[2]=RandomUniformlyR(-scin_hwy_si,scin_hwy_si);
+			X_lighting[1]=posx(G);X_lighting[2]=posy(G);
 			scintillator->RegisterLighting(X_lighting,N_photons);
 		}
 		n_ph[index]=N_photons;
@@ -103,8 +102,7 @@ int main(int , char **arg){
 				signal_diff(photomult2,w_d,s_d,n_phm,FirstConstrPar(phm_x,phm_y,phm_dead));
 		for(uint cnt=0;cnt<events_number; cnt++){
 			if(0==((cnt+1)%1000))Printf("\texperiment number %i...",cnt+1);
-			X_lighting[1]=RandomUniformlyR(-scin_hwx_si,scin_hwx_si);
-			X_lighting[2]=RandomUniformlyR(-scin_hwy_si,scin_hwy_si);
+			X_lighting[1]=posx(G);X_lighting[2]=posy(G);
 			scintillator2->RegisterLighting(X_lighting,N_photons);
 		}
 		sig_time_diff[K][index]=signal_diff.ResolutionSignal();
