@@ -9,6 +9,7 @@ output*.txt
 *_output.txt
 data.sorting.*
 .plotscript.gp
+*.gnuplot
 *.png
 *.autosave
 *.log
