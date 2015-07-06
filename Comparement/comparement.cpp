@@ -1,3 +1,5 @@
+// this file is distributed under
+// GPL v 3.0 license
 #include <QFile>
 #include <QTextStream>
 #include <Model_routines/displaygraph.h>

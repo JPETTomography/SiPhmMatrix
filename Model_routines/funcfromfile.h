@@ -1,3 +1,5 @@
+// this file is distributed under
+// GPL v 3.0 license
 #ifndef FUNCFROMFILE_H
 #define FUNCFROMFILE_H
 #include <QString>

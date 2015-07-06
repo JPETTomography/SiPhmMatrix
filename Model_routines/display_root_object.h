@@ -1,3 +1,5 @@
+// this file is distributed under
+// GPL v 3.0 license
 #ifndef ___DISPL___ROOT___
 #	define ___DISPL___ROOT___
 #include <TCanvas.h>

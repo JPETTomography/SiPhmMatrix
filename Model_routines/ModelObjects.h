@@ -1,3 +1,5 @@
+// this file is distributed under
+// GPL v 3.0 license
 #ifndef MODELOBJECTS_H
 #define MODELOBJECTS_H
 #include <TH1F.h>

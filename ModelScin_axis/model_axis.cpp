@@ -1,3 +1,5 @@
+// this file is distributed under
+// GPL v 3.0 license
 #include <Model_routines/display_root_object.h>
 #include <Model_routines/ModelObjects.h>
 #include <LongScintillator/photoncounters.h>

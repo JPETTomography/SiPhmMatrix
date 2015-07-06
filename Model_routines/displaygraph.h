@@ -1,3 +1,5 @@
+// this file is distributed under
+// GPL v 3.0 license
 #ifndef DISPLAYGRAPH_H
 #define DISPLAYGRAPH_H
 #include <QObject>
