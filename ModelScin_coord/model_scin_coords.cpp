@@ -50,7 +50,7 @@ int main(int , char **arg){
 				str<<"set terminal pngcairo size 800,600 enhanced monochrome font 'Verdana,20'\n";
 				str<<"set output 'Photon_number_distribution.png'\n";
 				str<<"set xlabel 'Photomultiplier index'\n";
-				str<<"set ylabel 'Registered photons count'\n";
+				str<<"set ylabel 'Average number of photoelectrons'\n";
 				str<<"set xrange [0:"<<phm_x*phm_y+1<<"]\n";
 				str<<"set yrange [0:"<<ymax<<"]\n";
 				str<<"set pointsize 3 \n";

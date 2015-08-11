@@ -52,7 +52,7 @@ int main(int , char **){
 			};
 			QTextStream str(&file);
 			for(uint i=0; i<n;i++){
-				str <<N[i]<<" " << emission(N[i]) <<"\n";
+				str <<N[i]<<" " << emission(N[i]*2.35*1.41) <<"\n";
 			}
 			file.close();
 		}
@@ -71,7 +71,7 @@ int main(int , char **){
 			double integral=IntegralForResolution(Y,0.0,39.0,0.005);
 			auto registering=[&integral](uint N){return 4.0/(integral*N);};
 			for(uint i=0; i<n;i++){
-				str <<N[i]<<" " << registering(N[i]) <<"\n";
+				str <<N[i]<<" " << registering(N[i]*2.35*1.41) <<"\n";
 			}
 			file.close();
 		}
@@ -83,8 +83,8 @@ int main(int , char **){
 			QTextStream str(&file);
 			str<<"set terminal pngcairo size 800,600 enhanced monochrome font 'Verdana,20'\n";
 			str<<"set output 'theory_estimation.png'\n";
-			str<<"set xlabel 'Number of registered photons'\n";
-			str<<"set ylabel 'Lower limit [ns]'\n";
+			str<<"set xlabel 'Number of photoelectrons'\n";
+			str<<"set ylabel 'CRT lower limit [ns]'\n";
 			str<<"set logscale x\n";
 			str<<"set logscale y\n";
 			QStringList colors;
@@ -103,7 +103,7 @@ int main(int , char **){
 				str <<"\"theory."<<z<<".output.txt\" w l ls "<<l+2<<" title \""<<z/10<<" cm\"";
 			}
 			str << ",\\\n";
-			str << "\"<echo '200 0.08'\" with points title \"Experiment\"";
+			str << "\"<echo '200 0.265'\" with points title \"Experiment\"";
 			str<<"\npause -1";
 			file.close();
 		}

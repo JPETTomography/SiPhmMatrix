@@ -19,7 +19,7 @@ void displaygraph(TMultiGraph *gr, uint n, double *x, QString *legend, double *x
 	fn+=".png";
 	fn=fn.replace(" ","_");
 	DisplayObject_plusplus(fn.toStdString(),[](TCanvas*,TMultiGraph*){},gr,"acp",[n,x,x_alt,alt_axis_name,x_alt_2,alt_axis_name_2,legend](TCanvas* c,TMultiGraph* gr){
-		gr->GetYaxis()->SetTitle("#sigma [ns]");
+		gr->GetYaxis()->SetTitle("CRT [ns]");
 		gr->GetXaxis()->SetTitle("N");
 		gr->GetXaxis()->SetLabelSize(0.05);
 		gr->GetXaxis()->SetTitleSize(0.05);
@@ -59,6 +59,7 @@ EMarkerStyle styles[]={kFullCircle,kFullTriangleUp,kFullSquare,kOpenCircle,kOpen
 TMultiGraph* MakeGraph(uint k, uint n, double* x, double **y, std::string name, std::string title){
 	TMultiGraph* mgr=new TMultiGraph(name.c_str(),title.c_str());
 	for(uint grn=0; grn<k;grn++){
+		for(uint i=0;i<n;i++)y[grn][i]*= 2.35  * 1.41  / 2;
 		TGraph *gr=new TGraph(n, x, y[grn]);
 		QString nm=QString::number(grn);
 		mgr->Add(gr);

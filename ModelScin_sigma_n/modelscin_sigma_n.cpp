@@ -33,9 +33,9 @@ int main(int , char **arg){
 		scintillator->RegisterLighting(X_lighting,n_widm);
 	}
 	for(uint k=0; k<this_K;k++){
-		sigma[0][k]=first_photons.SigmaLeftPhotonTime(k);
-		sigma[1][k]=first_photons.SigmaRightPhotonTime(k);
-		sigma[2][k]=first_photons.SigmaTimeDifference(k);
+		sigma[0][k]=first_photons.SigmaLeftPhotonTime(k) * 2.35  * 1.41  / 2;
+		sigma[1][k]=first_photons.SigmaRightPhotonTime(k) * 2.35  * 1.41  / 2;
+		sigma[2][k]=first_photons.SigmaTimeDifference(k) * 2.35  * 1.41  / 2;
 	}
 	QString name="timeres";
 	QString title[3];
@@ -46,7 +46,7 @@ int main(int , char **arg){
 		uint KK=0;while((KK<this_K)&&(std::isfinite(sigma[i][KK])))KK++;
 		TGraph* gr=new TGraph(KK,&(n[0]),&(sigma[i][0]));
 		gr->SetNameTitle((name+QString::number(i)).toStdString().c_str(),title[i].toStdString().c_str());
-		gr->GetYaxis()->SetTitle("#sigma [ns]");
+		gr->GetYaxis()->SetTitle("CRT [ns]");
 		gr->GetXaxis()->SetTitle("Order statistics");
 		gr->GetXaxis()->SetLabelSize(0.05);
 		gr->GetXaxis()->SetTitleSize(0.05);
