@@ -52,7 +52,7 @@ int main(int , char **){
 			};
 			QTextStream str(&file);
 			for(uint i=0; i<n;i++){
-				str <<N[i]<<" " << emission(N[i]*2.35*1.41) <<"\n";
+				str <<N[i]<<" " << emission(N[i])*2.35*1.41 <<"\n";
 			}
 			file.close();
 		}
@@ -71,7 +71,7 @@ int main(int , char **){
 			double integral=IntegralForResolution(Y,0.0,39.0,0.005);
 			auto registering=[&integral](uint N){return 4.0/(integral*N);};
 			for(uint i=0; i<n;i++){
-				str <<N[i]<<" " << registering(N[i]*2.35*1.41) <<"\n";
+				str <<N[i]<<" " << registering(N[i])*2.35*1.41 <<"\n";
 			}
 			file.close();
 		}
