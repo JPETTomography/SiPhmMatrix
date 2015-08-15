@@ -42,7 +42,7 @@ int main(int , char **arg){
 		if(N_photons==n_widm){
 			TGraph* gr=new TGraph(this_K_);
 			for(uint k=0; k<this_K_;k++)
-				gr->SetPoint(k,k+1,first_photons.SigmaTimeDifference(k) * 2.35  * 1.41  / 2);
+				gr->SetPoint(k,k+1,first_photons.SigmaTimeDifference(k) *2.35/sqrt(2));
 			gr->SetTitle("");
 			gr->GetYaxis()->SetTitle("CRT [ns]");
 			gr->GetXaxis()->SetTitle("Order statistics");

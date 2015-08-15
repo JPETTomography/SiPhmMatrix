@@ -71,7 +71,7 @@ int main(int , char **arg){
 	}
 	Printf("CALCULATION FINISHED. DISPLAYING RESULTS");
 	displaygraph(MakeGraph(K,n,n_ph,sig_time_left,"leftgr","Left Photomultiplier"),n,n_ph,NULL,n_ph_l,"Number of photoelectrons");
-	displaygraph(MakeGraph(K,n,n_ph,sig_time_left,"rightgr","Right Photomultiplier"),n,n_ph,NULL,n_ph_l,"Number of photoelectrons");
+	displaygraph(MakeGraph(K,n,n_ph,sig_time_right,"rightgr","Right Photomultiplier"),n,n_ph,NULL,n_ph_l,"Number of photoelectrons");
 	displaygraph(MakeGraph(K+1,n,n_ph,sig_time_diff,"diffgr",""),n,n_ph,NULL,n_ph_both,"Number of photoelectrons");
 	Printf(QDateTime::currentDateTime().toString().toStdString().c_str());
 	Printf("SAVING FILE");

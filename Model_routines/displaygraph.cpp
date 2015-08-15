@@ -59,7 +59,7 @@ EMarkerStyle styles[]={kFullCircle,kFullTriangleUp,kFullSquare,kOpenCircle,kOpen
 TMultiGraph* MakeGraph(uint k, uint n, double* x, double **y, std::string name, std::string title){
 	TMultiGraph* mgr=new TMultiGraph(name.c_str(),title.c_str());
 	for(uint grn=0; grn<k;grn++){
-		for(uint i=0;i<n;i++)y[grn][i]*= 2.35  * 1.41  / 2;
+		for(uint i=0;i<n;i++)y[grn][i]*=2.35/sqrt(2);
 		TGraph *gr=new TGraph(n, x, y[grn]);
 		QString nm=QString::number(grn);
 		mgr->Add(gr);

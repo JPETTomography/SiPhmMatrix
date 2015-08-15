@@ -33,9 +33,9 @@ int main(int , char **arg){
 		scintillator->RegisterLighting(X_lighting,n_widm);
 	}
 	for(uint k=0; k<this_K;k++){
-		sigma[0][k]=first_photons.SigmaLeftPhotonTime(k) * 2.35  * 1.41  / 2;
-		sigma[1][k]=first_photons.SigmaRightPhotonTime(k) * 2.35  * 1.41  / 2;
-		sigma[2][k]=first_photons.SigmaTimeDifference(k) * 2.35  * 1.41  / 2;
+		sigma[0][k]=first_photons.SigmaLeftPhotonTime(k) *2.35/sqrt(2);
+		sigma[1][k]=first_photons.SigmaRightPhotonTime(k) *2.35/sqrt(2);
+		sigma[2][k]=first_photons.SigmaTimeDifference(k) *2.35/sqrt(2);
 	}
 	QString name="timeres";
 	QString title[3];
