@@ -24,7 +24,7 @@ public:
 	void ReleaseHist();
 	TH1F* getHist(bool release=true);
 protected:
-	virtual void Process(bool isRight, double *data)override;
+	virtual void Process(bool isRight, double *data,std::mt19937&G)override;
 private:
 	TH1F* hist;
 	uint counter;

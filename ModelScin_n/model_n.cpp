@@ -13,7 +13,7 @@ public:
 	lt_test(ScinLightingParamsHeader):LongScintillator(1,ScinLightingParams){}
 protected:
 	virtual void TracePhoton(double* data, bool isright, double,double, double)override{
-		PhotonReachesPhotomultiplier(isright,data);
+		PhotonReachesPhotomultiplier(isright,data,G);
 	}
 };
 int nn=22;

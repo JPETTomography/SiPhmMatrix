@@ -95,6 +95,6 @@ TH1F* PhotonHistogram::getHist(bool release){
 	if(release)hist=NULL;
 	return res;
 }
-void PhotonHistogram::Process(bool isRight, double *data){
+void PhotonHistogram::Process(bool isRight, double *data, std::mt19937 &){
 	if((hist!=NULL)&&(!isRight))hist->Fill(data[par_n]);
 }

@@ -53,8 +53,8 @@ protected:
 	virtual double Efficiency(double* data)override{
 		return PhotoMultiplier_Efficiency1par<3,FuncFromFile>::Efficiency(data);
 	}
-	virtual void SmearParameters(double* data)override{
-		PhotoMultiplierConstTimeRes::SmearParameters(data);
+	virtual void SmearParameters(double* data,std::mt19937&G)override{
+		PhotoMultiplierConstTimeRes::SmearParameters(data,G);
 	}
 };
 
