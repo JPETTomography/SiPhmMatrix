@@ -2,6 +2,8 @@
 // GPL v 3.0 license
 #include <random>
 #include <QDateTime>
+#include <QFile>
+#include <QTextStream>
 #include <Model_routines/displaygraph.h>
 #include <Model_routines/display_root_object.h>
 #include <Model_routines/funcfromfile.h>
@@ -94,8 +96,21 @@ int main(int , char **arg){
 	});
 	}
 	Printf("CALCULATION FINISHED. DISPLAYING RESULTS");
-	Printf("DONE.");
-	Printf(QDateTime::currentDateTime().toString().toStdString().c_str());
+	Printf("SAVING FILE");
+	QString name(arg[0]);
+	QFile file(name+".output.txt");
+	file.open(QIODevice::WriteOnly);
+	if(file.isOpen()){
+		QTextStream str(&file);
+		for(int i=0; i<n; i++){
+			str<<n_ph[i];
+			for(uint k=0;k<3;k++)
+				str<<" "<<sig_time_diff[k][i];
+			str<<"\n";
+		}
+		file.close();
+	}
+	Printf("DONE.");	Printf(QDateTime::currentDateTime().toString().toStdString().c_str());
 	for(uint k=0; k<3; k++)
 		delete[] sig_time_diff[k];
 	return 0;

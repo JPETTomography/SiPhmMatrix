@@ -2,6 +2,8 @@
 // GPL v 3.0 license
 #include <random>
 #include <QDateTime>
+#include <QFile>
+#include <QTextStream>
 #include <TGraph.h>
 #include <TH1F.h>
 #include <TGaxis.h>
@@ -44,6 +46,16 @@ int main(int , char **arg){
 	title[2]="";
 	for(uint i=0;i<3;i++){
 		uint KK=0;while((KK<this_K)&&(std::isfinite(sigma[i][KK])))KK++;
+		Printf("SAVING FILE");
+		QFile file(QString(arg[0])+".n"+QString::number(i)+".output.txt");
+		file.open(QIODevice::WriteOnly);
+		if(file.isOpen()){
+			QTextStream str(&file);
+			for(uint k=0; k<KK;k++)
+				str<<n[k]<<" "<<sigma[i][k] *2.35/sqrt(2)<<"\n";
+			file.close();
+		}
+		Printf("DONE.");
 		TGraph* gr=new TGraph(KK,&(n[0]),&(sigma[i][0]));
 		gr->SetNameTitle((name+QString::number(i)).toStdString().c_str(),title[i].toStdString().c_str());
 		gr->GetYaxis()->SetTitle("CRT [ns]");

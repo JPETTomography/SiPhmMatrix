@@ -41,8 +41,19 @@ int main(int , char **arg){
 		}
 		if(N_photons==n_widm){
 			TGraph* gr=new TGraph(this_K_);
-			for(uint k=0; k<this_K_;k++)
-				gr->SetPoint(k,k+1,first_photons.SigmaTimeDifference(k) *2.35/sqrt(2));
+			Printf("SAVING FILE");
+			QString name(arg[0]);
+			QFile file(name+".n.output.txt");
+			file.open(QIODevice::WriteOnly);
+			if(file.isOpen()){
+				QTextStream str(&file);
+				for(uint k=0; k<this_K_;k++){
+					gr->SetPoint(k,k+1,first_photons.SigmaTimeDifference(k) *2.35/sqrt(2));
+					str<<k<<" "<<first_photons.SigmaTimeDifference(k) *2.35/sqrt(2)<<"\n";
+				}
+				file.close();
+			}
+			Printf("DONE.");
 			gr->SetTitle("");
 			gr->GetYaxis()->SetTitle("CRT [ns]");
 			gr->GetXaxis()->SetTitle("Order statistics");

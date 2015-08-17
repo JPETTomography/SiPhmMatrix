@@ -4,6 +4,8 @@
 #include <TH1F.h>
 #include <TGaxis.h>
 #include <QDateTime>
+#include <QFile>
+#include <QTextStream>
 #include <Model_routines/displaygraph.h>
 #include <Model_routines/funcfromfile.h>
 #include <Model_routines/display_root_object.h>
@@ -35,6 +37,18 @@ int main(int , char **arg){
 			coords[1]=posx(G);	coords[2]=posy(G);
 			scintillator.RegisterLighting(coords,n_widm,G);
 		}
+		Printf("SAVING FILE");
+		QString name(arg[0]);
+		QFile file(name+"."+QString::number(index)+".output.txt");
+		file.open(QIODevice::WriteOnly);
+		if(file.isOpen()){
+			QTextStream str(&file);
+			auto hist=timehist.getHist(false);
+			for(int i=1,n=hist->GetNbinsX(); i<=n; i++)
+				str<<hist->GetBinCenter(i)<<" "<<hist->GetBinContent(i)<<"\n";
+			file.close();
+		}
+		Printf("SAVED.");
 		double m=timehist.getHist(false)->GetMaximum();if(m>max)max=m;
 		TGraph* graph=new TGraph(timehist.getHist());
 		distr->Add(graph);
