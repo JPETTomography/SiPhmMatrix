@@ -17,7 +17,7 @@ Width_t widths[]={4,4,2,1};
 EColor colors[]={kBlack,kBlack,kBlack,kBlack};
 ELineStyle styles[]={kSolid,kDotted,kSolid,kDotted};
 int main(int , char **arg){
-	std::default_random_engine G;
+	std::mt19937 G;
 	std::uniform_real_distribution<double> posx(-scin_hwx,scin_hwx),posy(-scin_hwy,scin_hwy);
 	Printf(arg[0]);
 	Printf(QDateTime::currentDateTime().toString().toStdString().c_str());
@@ -33,7 +33,7 @@ int main(int , char **arg){
 		for(uint cnt=0; cnt<events_number;cnt++){
 			if(0==((cnt+1)%1000))Printf("\texperiment number %i...",cnt+1);
 			coords[1]=posx(G);	coords[2]=posy(G);
-			scintillator.RegisterLighting(coords,n_widm);
+			scintillator.RegisterLighting(coords,n_widm,G);
 		}
 		double m=timehist.getHist(false)->GetMaximum();if(m>max)max=m;
 		TGraph* graph=new TGraph(timehist.getHist());

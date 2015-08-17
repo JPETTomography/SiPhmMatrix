@@ -35,6 +35,7 @@ uint N[]={1,2, 3, 4,5,6,7,8,9, 10, 20, 50, 100, 200, 500, 1000, 1800, 2000, 3000
 const uint n_exp=3;
 double L[]={300,500,1000};
 int main(int , char **){
+	std::mt19937 G;
 	Scintillator3D_rect scintillator(1200,scin_hwx_si,scin_hwy_si,scin_refr,lighting_params);
 	{QFile file("theory.output.txt");
 		file.open(QFile::WriteOnly);
@@ -65,7 +66,7 @@ int main(int , char **){
 			QTextStream str(&file);
 			PhotonDistribution distr(&scintillator,-0.01,203,-1.0,40.0);
 			double x[]={z,0,0};
-			scintillator.RegisterLighting(x,events_number*3000);
+			scintillator.RegisterLighting(x,events_number*3000,G);
 			double norm=Sympson([&distr](double x){return distr.LeftDistr(x);},0.0,39.0,0.01);
 			auto Y=[&distr,norm](double x){return distr.LeftDistr(x)/norm;};
 			double integral=IntegralForResolution(Y,0.0,39.0,0.005);

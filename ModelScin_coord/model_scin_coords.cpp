@@ -11,7 +11,7 @@
 #include <LongScintillator/math_h/sigma.h>
 const uint n_phm=phm_x*phm_y;
 int main(int , char **arg){
-	std::default_random_engine G;
+	std::mt19937 G;
 	std::uniform_real_distribution<double> posx(-scin_hwx_si,scin_hwx_si),posy(-scin_hwy_si,scin_hwy_si);
 	Printf(arg[0]);
 	Printf(QDateTime::currentDateTime().toString().toStdString().c_str());
@@ -28,7 +28,7 @@ int main(int , char **arg){
 		const uint photon_number=3410;
 		for(uint ii=0;ii<events_number;ii++){
 			X_lighting[1]=posx(G);X_lighting[2]=posy(G);
-			scintillator->RegisterLighting(X_lighting,photon_number);
+			scintillator->RegisterLighting(X_lighting,photon_number,G);
 		}
 		QFile file("average.per.phm.output.txt");
 		file.open(QIODevice::WriteOnly);
@@ -74,7 +74,7 @@ int main(int , char **arg){
 		for(uint cnt=0;cnt<events_number; cnt++){
 			if(0==((cnt+1)%1000))Printf("\texperiment number %i...",cnt+1);
 			X_lighting[1]=posx(G);X_lighting[2]=posy(G);
-			scintillator->RegisterLighting(X_lighting,N_photons);
+			scintillator->RegisterLighting(X_lighting,N_photons,G);
 		}
 		n_ph[index]=N_photons;
 		WeightedAverageCalculator<double> Small;
@@ -105,7 +105,7 @@ int main(int , char **arg){
 		for(uint cnt=0;cnt<events_number; cnt++){
 			if(0==((cnt+1)%1000))Printf("\texperiment number %i...",cnt+1);
 			X_lighting[1]=posx(G);X_lighting[2]=posy(G);
-			scintillator2->RegisterLighting(X_lighting,N_photons);
+			scintillator2->RegisterLighting(X_lighting,N_photons,G);
 		}
 		sig_time_diff[K][index]=signal_diff.ResolutionSignal();
 		Printf("Sigma_gen[*][%i] = %f",index,sig_time_diff[K][index]);

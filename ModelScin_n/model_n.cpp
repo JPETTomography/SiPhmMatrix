@@ -12,7 +12,7 @@ class lt_test:public LongScintillator{
 public:
 	lt_test(ScinLightingParamsHeader):LongScintillator(1,ScinLightingParams){}
 protected:
-	virtual void TracePhoton(double* data, bool isright, double,double, double)override{
+	virtual void TracePhoton(double* data, bool isright, double,double, double,std::mt19937&G)override{
 		PhotonReachesPhotomultiplier(isright,data,G);
 	}
 };
@@ -26,7 +26,7 @@ double NN[]={25,
 			6000,7000,8000,
 			10000, 15000, 20000};
 int main(int , char **arg){
-	std::default_random_engine G;
+	std::mt19937 G;
 	std::uniform_real_distribution<double> posx(-scin_hwx,scin_hwx),posy(-scin_hwy,scin_hwy);
 	Printf(arg[0]);
 	Printf(QDateTime::currentDateTime().toString().toStdString().c_str());
@@ -44,7 +44,7 @@ int main(int , char **arg){
 		for(uint cnt=0;cnt<events_number; cnt++){
 			if(0==((cnt+1)%1000))Printf("\texperiment number %i...",cnt+1);
 			X_lighting[1]=posx(G);X_lighting[2]=posy(G);
-			scintillator->RegisterLighting(X_lighting,N_photons);
+			scintillator->RegisterLighting(X_lighting,N_photons,G);
 		}
 		n_ph[index]=N_photons;
 		for(uint k=0; k<K; k++){

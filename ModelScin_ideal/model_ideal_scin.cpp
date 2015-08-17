@@ -13,7 +13,7 @@
 #include <LongScintillator/math_h/interpolate.h>
 const uint this_K_=1000;
 int main(int , char **arg){
-	std::default_random_engine G;
+	std::mt19937 G;
 	std::uniform_real_distribution<double> posx(-scin_hwx,scin_hwx),posy(-scin_hwy,scin_hwy);
 	Printf(arg[0]);
 	Printf(QDateTime::currentDateTime().toString().toStdString().c_str());
@@ -32,7 +32,7 @@ int main(int , char **arg){
 		for(uint cnt=0;cnt<events_number; cnt++){
 			if(0==((cnt+1)%1000))Printf("\texperiment number %i...",cnt+1);
 			X_lighting[1]=posx(G);X_lighting[2]=posy(G);
-			scintillator->RegisterLighting(X_lighting,N_photons);
+			scintillator->RegisterLighting(X_lighting,N_photons,G);
 		}
 		n_ph[index]=N_photons;
 		for(uint k=0; k<K; k++){
@@ -77,7 +77,7 @@ int main(int , char **arg){
 		for(uint cnt=0;cnt<events_number; cnt++){
 			if(0==((cnt+1)%1000))Printf("\texperiment number %i...",cnt+1);
 			X_lighting[1]=posx(G);X_lighting[2]=posy(G);
-			scintillator2->RegisterLighting(X_lighting,N_photons);
+			scintillator2->RegisterLighting(X_lighting,N_photons,G);
 			if(0==N_photons%1000){
 				for(uint k=0; k<K; k++)
 					hist[k]->Fill(dynamic_cast<FirstPhotonsReg*>(&signal_diff)->TimeDifference(k));

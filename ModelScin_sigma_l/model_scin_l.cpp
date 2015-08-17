@@ -11,7 +11,7 @@
 int nn=10;
 double lengths[]={30, 50, 75, 100, 150, 200, 300, 400, 500, 1000};
 int main(int , char **arg){
-	std::default_random_engine G;
+	std::mt19937 G;
 	std::uniform_real_distribution<double> posx(-scin_hwx_si,scin_hwx_si),posy(-scin_hwy_si,scin_hwy_si);
 	Printf(arg[0]);
 	Printf(QDateTime::currentDateTime().toString().toStdString().c_str());
@@ -42,9 +42,9 @@ int main(int , char **arg){
 		for(uint cnt=0;cnt<events_number; cnt++){
 			if(0==((cnt+1)%1000))Printf("\texperiment number %i...",cnt+1);
 			X_lighting[1]=posx(G);X_lighting[2]=posy(G);
-			scin_ideal->RegisterLighting(X_lighting,N_photons);
-			scin_real->RegisterLighting(X_lighting,N_photons);
-			scin_si->RegisterLighting(X_lighting,N_photons);
+			scin_ideal->RegisterLighting(X_lighting,N_photons,G);
+			scin_real->RegisterLighting(X_lighting,N_photons,G);
+			scin_si->RegisterLighting(X_lighting,N_photons,G);
 		}
 		n_ph[index]=length;
 		Printf(QDateTime::currentDateTime().toString().toStdString().c_str());
@@ -70,9 +70,9 @@ int main(int , char **arg){
 		for(uint cnt=0;cnt<events_number; cnt++){
 			if(0==((cnt+1)%1000))Printf("\texperiment number %i...",cnt+1);
 			X_lighting[1]=posx(G);X_lighting[2]=posy(G);
-			scin_ideal2->RegisterLighting(X_lighting,N_photons);
-			scin_real2->RegisterLighting(X_lighting,N_photons);
-			scin_si2->RegisterLighting(X_lighting,N_photons);
+			scin_ideal2->RegisterLighting(X_lighting,N_photons,G);
+			scin_real2->RegisterLighting(X_lighting,N_photons,G);
+			scin_si2->RegisterLighting(X_lighting,N_photons,G);
 		}
 		sig_time_diff[0][index]=signal_ideal.ResolutionSignal();
 		sig_time_diff[1][index]=(first_real.SigmaTimeDifference(0)+first_real.SigmaTimeDifference(2))/2.0;

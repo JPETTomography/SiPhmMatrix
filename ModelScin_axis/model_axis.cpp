@@ -4,11 +4,12 @@
 #include <Model_routines/ModelObjects.h>
 #include <LongScintillator/photoncounters.h>
 int main(int , char **arg){
+	std::mt19937 G;
 	Printf(arg[0]);
 	LongScintillator *scintillator=CreateIdealScintillator(0);
 	double x[3];for(uint i=0; i<3;i++)x[i]=0;
 	FirstPhotonsReg reg(scintillator,100);
-	scintillator->RegisterLighting(x,50);
+	scintillator->RegisterLighting(x,50,G);
 	double y[40],left[40],right[40];
 	uint nl=0;uint nr=0;
 	for(uint i=0;i<20;i++){
