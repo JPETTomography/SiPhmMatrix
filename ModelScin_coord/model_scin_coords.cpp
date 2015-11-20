@@ -112,8 +112,8 @@ int main(int , char **arg){
 	}
 
 	Printf("CALCULATION FINISHED. DISPLAYING RESULTS");
-	displaygraph(MakeGraph(K+1,n,n_ph,sig_time_diff,"diffgr",""),
-				n,n_ph,NULL,n_ph_small,"average photons registered (one photomultiplier)",
+	displaygraph(MakeGraph(K+1,n,n_ph,sig_time_diff,Sigma2CRT,"diffgr",""),
+				n,n_ph,Sigma2CRT,NULL,n_ph_small,"average photons registered (one photomultiplier)",
 				n_ph_big,"all photons registered");
 	Printf("SAVING FILE");
 	QString name(arg[0]);

@@ -1,5 +1,6 @@
 // this file is distributed under
 // GPL v 3.0 license
+#include <functional>
 #include <TFrame.h>
 #include <TList.h>
 #include <QApplication>
@@ -8,7 +9,7 @@
 #include "displaygraph.h"
 #include <Model_routines/display_root_object.h>
 int file_no=0;
-void displaygraph(TMultiGraph *gr, uint n, double *x, QString *legend, double *x_alt, std::string alt_axis_name, double *x_alt_2, std::string alt_axis_name_2){
+void displaygraph(TMultiGraph *gr, uint n, double *x, CrutchType crutch, QString *legend, double *x_alt, std::string alt_axis_name, double *x_alt_2, std::string alt_axis_name_2){
 	file_no++;
 	QString fn="Graph_";
 	fn+=QString::number(file_no);
@@ -18,8 +19,16 @@ void displaygraph(TMultiGraph *gr, uint n, double *x, QString *legend, double *x
 		fn+="_"+QString::fromStdString(alt_axis_name_2);
 	fn+=".png";
 	fn=fn.replace(" ","_");
-	DisplayObject_plusplus(fn.toStdString(),[](TCanvas*,TMultiGraph*){},gr,"acp",[n,x,x_alt,alt_axis_name,x_alt_2,alt_axis_name_2,legend](TCanvas* c,TMultiGraph* gr){
-		gr->GetYaxis()->SetTitle("CRT [ns]");
+	DisplayObject_plusplus(fn.toStdString(),[](TCanvas*,TMultiGraph*){},gr,"acp",[n,x,x_alt,alt_axis_name,x_alt_2,alt_axis_name_2,legend,crutch](TCanvas* c,TMultiGraph* gr){
+		switch(crutch){
+		case No_crutch:
+			gr->GetYaxis()->SetTitle("#sigma [ns]");
+			break;
+		case Sigma2CRT:
+		case Sigma2CRT_plusCorrection:
+			gr->GetYaxis()->SetTitle("CRT [ns]");
+			break;
+		};
 		gr->GetXaxis()->SetTitle("N");
 		gr->GetXaxis()->SetLabelSize(0.05);
 		gr->GetXaxis()->SetTitleSize(0.05);
@@ -56,15 +65,24 @@ void displaygraph(TMultiGraph *gr, uint n, double *x, QString *legend, double *x
 	});
 }
 EMarkerStyle styles[]={kFullCircle,kFullTriangleUp,kFullSquare,kOpenCircle,kOpenTriangleUp, kOpenSquare};
-TMultiGraph* MakeGraph(uint k, uint n, double* x, double **y, std::string name, std::string title){
+TMultiGraph* MakeGraph(uint k, uint n, double* x, double **y, CrutchType crutch, std::string name, std::string title){
 	TMultiGraph* mgr=new TMultiGraph(name.c_str(),title.c_str());
 	for(uint grn=0; grn<k;grn++){
-		// Provide coefficient needed after publication recensing
-		// it's converting sigma->CRT
-		// 63 ps is the time difference smearing caused by detector geometry
-		// it corresponds to time of gamma-quantum flying throwgh detectors width
-		// Sory for providing this change such way :-(
-		for(uint i=0;i<n;i++)y[grn][i]=sqrt(pow(y[grn][i]*2.35,2)/2.0+pow(0.063,2));
+		QList<std::function<void()>> crutches;
+		switch(crutch){
+		case Sigma2CRT_plusCorrection:
+			crutches.append([&y,grn,n](){
+				for(uint i=0;i<n;i++)y[grn][i]=sqrt(pow(y[grn][i],2)+pow(Crutch_Correction,2));
+			});
+		case Sigma2CRT:
+			crutches.insert(0,[&y,grn,n](){
+				for(uint i=0;i<n;i++)y[grn][i]*=Crutch_sigma2CRT;
+			});
+			break;
+		default:
+			break;
+		};
+		for(auto action:crutches)action();
 		TGraph *gr=new TGraph(n, x, y[grn]);
 		QString nm=QString::number(grn);
 		mgr->Add(gr);

@@ -103,7 +103,7 @@ int main(int , char **arg){
 		Printf("Sigma: %f",sig_time_diff[K][index]);
 	}
 	Printf("CALCULATION FINISHED. DISPLAYING RESULTS");
-	displaygraph(MakeGraph(K+1,n,n_ph,sig_time_diff,"diffgr",""),n,n_ph);
+	displaygraph(MakeGraph(K+1,n,n_ph,sig_time_diff,Sigma2CRT,"diffgr",""),n,n_ph,Sigma2CRT);
 	Printf("SAVING FILE");
 	QString name(arg[0]);
 	QFile file(name+".output.txt");

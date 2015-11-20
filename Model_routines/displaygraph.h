@@ -9,12 +9,24 @@
 #include <TGraph.h>
 #include <TMultiGraph.h>
 #include <LongScintillator/scintillator.h>
-void displaygraph(TMultiGraph* gr, uint n, double* x
+
+// ATTENTION! dangerous place
+// Provide coefficient needed after publication recensing
+// it's converting sigma->CRT
+// 63 ps is the time difference smearing caused by detector geometry
+// it corresponds to time of gamma-quantum flying throwgh detectors width
+// Sory for providing this change such way :-(
+enum CrutchType{No_crutch,Sigma2CRT,Sigma2CRT_plusCorrection};
+const double Crutch_sigma2CRT=2.35/sqrt(2);
+//63ps corresponds to time of gamma-quantum flight through detector width
+const double Crutch_Correction=0.063;
+
+void displaygraph(TMultiGraph* gr, uint n, double* x, CrutchType crutch
 				, QString *legend=NULL
 				, double* x_alt=NULL, std::string alt_axis_name=""
 				, double* x_alt_2=NULL, std::string alt_axis_name_2=""
 		);
-TMultiGraph* MakeGraph(uint k, uint n, double* x, double **y, std::string name, std::string title);
+TMultiGraph* MakeGraph(uint k, uint n, double* x, double **y, CrutchType crutch, std::string name, std::string title);
 class PhotonHistogram:public PhotonReg{
 	Q_OBJECT
 public:

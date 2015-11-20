@@ -72,7 +72,7 @@ int main(int , char **arg){
 		if(uklad_dead[i]>0)
 			legend[i]+="(with dead area)";
 	}
-	displaygraph(MakeGraph(ukl_k,n,n_ph,sig_time_diff,"diffgr",""),n,n_ph,legend,NULL,"_additional");
+	displaygraph(MakeGraph(ukl_k,n,n_ph,sig_time_diff,Sigma2CRT,"diffgr",""),n,n_ph,Sigma2CRT,legend,NULL,"_additional");
 	Printf("SAVING FILE");
 	QString name(arg[0]);
 	QFile file(name+".output.txt");

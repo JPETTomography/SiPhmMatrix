@@ -58,7 +58,7 @@ int main(int , char **arg){
 	}
 	DisplayObject_plusplus("nnn.png",[](TCanvas* c1, TMultiGraph*){
 		c1->SetLogx();
-	},MakeGraph(K,nn,n_ph,sig_time_diff,"diffgr",""),"acp",[](TCanvas*, TMultiGraph*){
+	},MakeGraph(K,nn,n_ph,sig_time_diff,Sigma2CRT,"diffgr",""),"acp",[](TCanvas*, TMultiGraph*){
 	});
 	Printf("CALCULATION FINISHED. DISPLAYING RESULTS");
 	Printf("SAVING FILE");
