@@ -59,7 +59,12 @@ EMarkerStyle styles[]={kFullCircle,kFullTriangleUp,kFullSquare,kOpenCircle,kOpen
 TMultiGraph* MakeGraph(uint k, uint n, double* x, double **y, std::string name, std::string title){
 	TMultiGraph* mgr=new TMultiGraph(name.c_str(),title.c_str());
 	for(uint grn=0; grn<k;grn++){
-		for(uint i=0;i<n;i++)y[grn][i]*=2.35/sqrt(2);
+		// Provide coefficient needed after publication recensing
+		// it's converting sigma->CRT
+		// 63 ps is the time difference smearing caused by detector geometry
+		// it corresponds to time of gamma-quantum flying throwgh detectors width
+		// Sory for providing this change such way :-(
+		for(uint i=0;i<n;i++)y[grn][i]=sqrt(pow(y[grn][i]*2.35,2)/2.0+pow(0.063,2));
 		TGraph *gr=new TGraph(n, x, y[grn]);
 		QString nm=QString::number(grn);
 		mgr->Add(gr);
