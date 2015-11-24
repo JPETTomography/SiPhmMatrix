@@ -64,7 +64,7 @@ void displaygraph(TMultiGraph *gr, uint n, double *x, CrutchType crutch, QString
 		}
 	});
 }
-EMarkerStyle styles[]={kFullCircle,kFullTriangleUp,kFullSquare,kOpenCircle,kOpenTriangleUp, kOpenSquare};
+EMarkerStyle styles[]={kFullCircle,kFullTriangleUp,kFullSquare,kOpenSquare,kFullTriangleDown, kFullDotSmall};
 TMultiGraph* MakeGraph(uint k, uint n, double* x, double **y, CrutchType crutch, std::string name, std::string title){
 	TMultiGraph* mgr=new TMultiGraph(name.c_str(),title.c_str());
 	for(uint grn=0; grn<k;grn++){

@@ -68,7 +68,7 @@ int main(int , char **arg){
 	Printf("CALCULATION FINISHED. DISPLAYING RESULTS");
 	QString legend[ukl_k];
 	for(uint i=0;i<ukl_k;i++){
-		legend[i]=QString::number(uklad[i*2])+"x"+QString::number(uklad[i*2+1]);
+		legend[i]=QString::number(uklad[i*2+1])+"x"+QString::number(uklad[i*2]);
 		if(uklad_dead[i]>0)
 			legend[i]+="(with dead area)";
 	}
