@@ -1,5 +1,6 @@
 J-PET Monte Carlo simulations
 ===========
+publication link: http://arxiv.org/pdf/1602.02058v1
 
 required packages:
 libqt4, libqt4-dev, cmake, make, ROOT
